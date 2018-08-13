@@ -4,4 +4,10 @@
     <string name="str_multi_player">Multi Player</string>
     <string name="str_score">Score</string>
     <string name="str_options">Options</string>
+
+    <string name="title_activity_single_player">SinglePlayerActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_multi_player">MultiPlayerActivity</string>
 </resources>
