@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MonkeyInTheJungle</string>
-    <string name="str_single_player">MonkeyInTheJungle</string>
-    <string name="str_multi_player">MonkeyInTheJungle</string>
-    <string name="str_score">MonkeyInTheJungle</string>
-    <string name="str_options">MonkeyInTheJungle</string>
+    <string name="str_single_player">Single Player</string>
+    <string name="str_multi_player">Multi Player</string>
+    <string name="str_score">Score</string>
+    <string name="str_options">Options</string>
 </resources>
