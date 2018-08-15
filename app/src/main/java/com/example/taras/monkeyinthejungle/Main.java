@@ -16,10 +16,12 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        intSinglePlayer =  new Intent(this, SinglePlayerActivity.class);
+
+        intSinglePlayer =  new Intent(this, TapCounterActivity.class);
         intMultiPlayer =  new Intent(this, MultiPlayerActivity.class);
         intScore =  new Intent(this, ScoreActivity.class);
         intOptions =  new Intent(this, GameOptionsActivity.class);
+
         setUpListeners();
     }
 
@@ -28,6 +30,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         Button btnMultiPlayer = findViewById(R.id.btn_multi_player);
         Button btnScore = findViewById(R.id.btn_score);
         Button btnOptions = findViewById(R.id.btn_options);
+
         btnSinglePlayer.setOnClickListener(this);
         btnMultiPlayer.setOnClickListener(this);
         btnScore.setOnClickListener(this);

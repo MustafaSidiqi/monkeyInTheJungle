@@ -19,11 +19,13 @@
         <activity android:name=".ScoreActivity" />
         <activity android:name=".GameOptionsActivity" />
         <activity
+            android:name=".TapCounterActivity" />
+
+        <activity
             android:name=".SinglePlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_single_player"
             android:theme="@style/FullscreenTheme" />
-        
         <activity
             android:name=".MultiPlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
