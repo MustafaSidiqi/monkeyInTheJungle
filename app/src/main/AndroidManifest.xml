@@ -22,7 +22,15 @@
             android:name=".SinglePlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_single_player"
-            android:theme="@style/FullscreenTheme" />
+            android:theme="@style/FullscreenTheme"
+            android:
+            android:allowEmbedded="@android:
+
+            
+
+
+"/>
+
         <activity
             android:name=".MultiPlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
