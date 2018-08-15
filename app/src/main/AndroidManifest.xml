@@ -23,6 +23,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_single_player"
             android:theme="@style/FullscreenTheme" />
+        
         <activity
             android:name=".MultiPlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
