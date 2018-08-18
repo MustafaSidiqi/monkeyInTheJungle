@@ -19,6 +19,9 @@
         <activity android:name=".ScoreActivity" />
         <activity android:name=".GameOptionsActivity" />
         <activity
+            android:name=".TapCounterActivity" />
+
+        <activity
             android:name=".SinglePlayerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_single_player"
