@@ -6,5 +6,9 @@
     <string name="str_options">Options</string>
     <string name="title_activity_single_player">SinglePlayerActivity</string>
     <string name="title_activity_multi_player">MultiPlayerActivity</string>
+    <string name="str_game_missing_number_header">Solve this equation</string>
+
+
+    <!-- test strings -->
     <string name="str_test_if_works">Hello My Dark World</string>
 </resources>
