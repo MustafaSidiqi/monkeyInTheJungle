@@ -1,5 +1,7 @@
 package com.example.taras.monkeyinthejungle.games;
 
+import android.util.Log;
+
 import java.util.Random;
 
 public class MissingNumberGame {
@@ -13,6 +15,8 @@ public class MissingNumberGame {
     private int[] options;
     private String equation;
     private int answer;
+    private int answerIndex;
+
 
     public MissingNumberGame() {
         rand = new Random();
@@ -23,32 +27,41 @@ public class MissingNumberGame {
         return options;
     }
 
+    public String getEquation() { return equation ;}
+
     public boolean isCorrect(int answer) {
         return answer == this.answer;
     }
 
+    public int getAngwerId() { return answerIndex; }
     private int generateEquation() {
-        int hiddenNumber = rand.nextInt(VARIABLES + 1);
+        int hiddenNumber = rand.nextInt(VARIABLES );
+        Log.d("MN", hiddenNumber + "");
         int result = 0;
         equation = "";
 
         for( int i = 0; i < VARIABLES; i ++) {
-            int number =  rand.nextInt((MAXNUMBER - MINNUMBER) + 1 )  + MINNUMBER;
-            if( i == hiddenNumber ) {
-                equation += "X";
-                this.answer = number;
-            }
-            equation += number;
-            if(rand.nextBoolean() && i != VARIABLES - 1) {
-             equation += " + ";
+            int number =  rand.nextInt((MAXNUMBER - MINNUMBER ) + 1 )  + MINNUMBER;
+
+            if(rand.nextBoolean() || i == 0) {
+             equation +=  " + ";
              result += number;
             } else {
                 equation += " - ";
                 result -= number;
             }
+
+            if( i == hiddenNumber ) {
+                equation += "X";
+                this.answer = number;
+            } else {
+                equation += number;
+            }
+
         }
+        equation = equation.substring(3, equation.length());
         equation += " = " + result;
-        return result;
+        return this.answer;
     }
 
     private void generateOptions(int correctAnswer) {
@@ -57,6 +70,7 @@ public class MissingNumberGame {
             int randomNumber = rand.nextInt((MAXNUMBER - MINNUMBER) + 1 )  + MINNUMBER;
             options[i] = rand.nextBoolean() ? correctAnswer + randomNumber : correctAnswer - randomNumber;
         }
-        options[rand.nextInt(OPTIONS)] = correctAnswer;
+        answerIndex = rand.nextInt(OPTIONS);
+        options[answerIndex] = correctAnswer;
     }
 }
