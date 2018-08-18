@@ -45,7 +45,7 @@
 
         <Button
             android:id="@+id/btn_option_two"
-            android:layout_width="0"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:layout_marginTop="10dp"
@@ -57,7 +57,7 @@
 
         <Button
             android:id="@+id/btn_option_three"
-            android:layout_width="0"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text=""
@@ -68,7 +68,7 @@
 
         <Button
             android:id="@+id/btn_option_four"
-            android:layout_width="0"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text=""
