@@ -7,6 +7,8 @@
     <string name="title_activity_single_player">SinglePlayerActivity</string>
     <string name="title_activity_multi_player">MultiPlayerActivity</string>
     <string name="str_game_missing_number_header">Solve this equation</string>
+    <string name="str_collect_word_header">Collect A Word</string>
+    <string name="str_reset">Reset</string>
 
 
     <!-- test strings -->
