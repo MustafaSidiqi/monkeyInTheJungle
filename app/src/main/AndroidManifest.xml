@@ -18,8 +18,8 @@
         </activity>
         <activity android:name=".ScoreActivity" />
         <activity android:name=".GameOptionsActivity" />
-        <activity android:name=".TapCounterActivity" />
-        <activity android:name=".TwoPairsActivity" />
+        <activity android:name=".TapCounterFragment" />
+        <activity android:name=".TwoPairsFragment" />
 
         <activity
             android:name=".SinglePlayerActivity"

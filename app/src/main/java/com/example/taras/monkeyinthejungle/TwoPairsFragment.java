@@ -2,17 +2,18 @@ package com.example.taras.monkeyinthejungle;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import java.util.Arrays;
 import java.util.Collections;
 
-public class TwoPairsActivity extends AppCompatActivity implements OnClickListener {
+public class TwoPairsFragment extends Fragment implements OnClickListener {
 
     ImageView imgView_11, imgView_12, imgView_13, imgView_14, imgView_21, imgView_22, imgView_23, imgView_24;
 
@@ -27,20 +28,23 @@ public class TwoPairsActivity extends AppCompatActivity implements OnClickListen
     int cardNum = 1;
     int points;
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.two_pairs_fragment, container, false);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_two_pairs);
+    public void onStart() {
+        super.onStart();
 
-        imgView_11 = (ImageView) findViewById(R.id.img_11);
-        imgView_12 = (ImageView) findViewById(R.id.img_12);
-        imgView_13 = (ImageView) findViewById(R.id.img_13);
-        imgView_14 = (ImageView) findViewById(R.id.img_14);
-        imgView_21 = (ImageView) findViewById(R.id.img_21);
-        imgView_22 = (ImageView) findViewById(R.id.img_22);
-        imgView_23 = (ImageView) findViewById(R.id.img_23);
-        imgView_24 = (ImageView) findViewById(R.id.img_24);
+        imgView_11 = (ImageView) getView().findViewById(R.id.img_11);
+        imgView_12 = (ImageView) getView().findViewById(R.id.img_12);
+        imgView_13 = (ImageView) getView().findViewById(R.id.img_13);
+        imgView_14 = (ImageView) getView().findViewById(R.id.img_14);
+        imgView_21 = (ImageView) getView().findViewById(R.id.img_21);
+        imgView_22 = (ImageView) getView().findViewById(R.id.img_22);
+        imgView_23 = (ImageView) getView().findViewById(R.id.img_23);
+        imgView_24 = (ImageView) getView().findViewById(R.id.img_24);
 
         imgView_11.setTag("0");
         imgView_12.setTag("1");

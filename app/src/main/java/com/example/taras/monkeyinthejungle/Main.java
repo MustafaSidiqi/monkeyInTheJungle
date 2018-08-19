@@ -17,7 +17,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        intSinglePlayer =  new Intent(this, TwoPairsActivity.class);
+        intSinglePlayer =  new Intent(this, TwoPairsFragment.class);
         intMultiPlayer =  new Intent(this, MultiPlayerActivity.class);
         intScore =  new Intent(this, ScoreActivity.class);
         intOptions =  new Intent(this, GameOptionsActivity.class);
