@@ -53,7 +53,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 startActivity(intOptions);
                 break;
             default:
-                Log.e("SNH", "Unknown Button Preseed");
+                Log.i("SNH", "Unknown Button Pressed");
                 break;
         }
     }
