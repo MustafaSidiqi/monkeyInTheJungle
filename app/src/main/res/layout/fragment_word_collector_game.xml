@@ -9,7 +9,9 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp">
+        android:layout_marginEnd="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_collect_word_header"
+        app:layout_constraintTop_toTopOf="@+id/txt_collect_word_header">
 
         <TextView
             android:id="@+id/txt_collect_word_header"
@@ -20,6 +22,31 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_result_world_collector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_collect_word_header" />
+
+        <LinearLayout
+            android:id="@+id/lnl_collect_word_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/txt_result_world_collector"></LinearLayout>
+
+        <Button
+            android:id="@+id/btn_collect_word_reset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/str_reset"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/lnl_collect_word_layout"/>
 
 
     </android.support.constraint.ConstraintLayout>
