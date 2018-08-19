@@ -3,14 +3,16 @@ package com.example.taras.monkeyinthejungle;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TapCounterActivity extends AppCompatActivity implements View.OnClickListener {
+public class TapCounterFragment extends Fragment implements View.OnClickListener {
 
     private  int mCointer = 0;
     private int maxCount = 10;
@@ -19,15 +21,16 @@ public class TapCounterActivity extends AppCompatActivity implements View.OnClic
     TextView tx;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tap_counter);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.tap_counter_fragment, container, false);
+    }
 
-        btn = (Button) findViewById(R.id.tapButton);
-        tx = (TextView) findViewById(R.id.counter);
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        btn = (Button) getActivity().findViewById(R.id.tapButton);
+        tx = (TextView) getActivity().findViewById(R.id.counter);
         btn.setOnClickListener(this);
-
         startTime = System.currentTimeMillis();
     }
 
@@ -42,7 +45,7 @@ public class TapCounterActivity extends AppCompatActivity implements View.OnClic
             difference = System.currentTimeMillis() - startTime;
             System.out.println("difference " + difference/1000.0);
 
-            Toast toast= Toast.makeText(getApplicationContext(),
+            Toast toast= Toast.makeText(getContext(),
                     "Saving your score", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 100);
             toast.show();
@@ -58,7 +61,7 @@ public class TapCounterActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void NextIntent() {
-        Intent myIntent = new Intent(this, Main.class);
+        Intent myIntent = new Intent(getActivity(), Main.class);
         this.startActivity(myIntent);
     }
 }
