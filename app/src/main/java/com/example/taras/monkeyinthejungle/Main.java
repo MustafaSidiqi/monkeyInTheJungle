@@ -1,7 +1,6 @@
 package com.example.taras.monkeyinthejungle;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,11 +41,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.btn_single_player:
-                Fragment f = new TwoPairsFragment();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.frameLayout, f)
-                        .commit();                break;
+                startActivity(intSinglePlayer);
+                break;
             case R.id.btn_multi_player:
                 startActivity(intMultiPlayer);
                 break;
