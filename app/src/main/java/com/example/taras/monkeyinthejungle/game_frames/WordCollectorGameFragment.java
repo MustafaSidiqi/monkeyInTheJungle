@@ -3,19 +3,16 @@ package com.example.taras.monkeyinthejungle.game_frames;
 
         import android.app.Activity;
         import android.os.Bundle;
-        import android.support.annotation.NonNull;
         import android.support.v4.app.Fragment;
-        import android.util.Log;
         import android.view.LayoutInflater;
         import android.widget.LinearLayout;
         import android.widget.TableRow.LayoutParams;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.Button;
-        import android.widget.TableLayout;
-        import android.widget.TableRow;
         import android.widget.TextView;
 
+        import com.example.taras.monkeyinthejungle.GamePlan;
         import com.example.taras.monkeyinthejungle.R;
         import com.example.taras.monkeyinthejungle.games.WordCollectorGame;
 
@@ -31,10 +28,8 @@ public class WordCollectorGameFragment extends Fragment {
     }
 
 
-    public static WordCollectorGameFragment newInstance(int gameId) {
+    public static WordCollectorGameFragment newInstance() {
         WordCollectorGameFragment fragment = new WordCollectorGameFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, gameId);
         return fragment;
     }
 
@@ -50,7 +45,7 @@ public class WordCollectorGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         System.out.println(gameId);
         activeView = inflater.inflate(R.layout.fragment_word_collector_game, container, false);
-        WordCollectorGame game = new WordCollectorGame();
+        WordCollectorGame game = (WordCollectorGame) GamePlan.getGameLogic().getGame().getGame();
         setValues(game, activeView);
         setResetButtonListener(activeView);
         return activeView;

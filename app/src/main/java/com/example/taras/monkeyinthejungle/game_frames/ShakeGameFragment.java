@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.taras.monkeyinthejungle.GamePlan;
 import com.example.taras.monkeyinthejungle.R;
 import com.example.taras.monkeyinthejungle.games.ShakeGame;
 
@@ -15,37 +16,30 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class ShakeGameFragment extends Fragment implements Observer {
-        private static final String ARG_PARAM1 = "gameId";
-        private int gameId;
         private View activeView;
         ShakeGame game;
         public ShakeGameFragment() {
         }
 
 
-        public static com.example.taras.monkeyinthejungle.game_frames.ShakeGameFragment newInstance(int gameId) {
+        public static com.example.taras.monkeyinthejungle.game_frames.ShakeGameFragment newInstance() {
             com.example.taras.monkeyinthejungle.game_frames.ShakeGameFragment fragment = new com.example.taras.monkeyinthejungle.game_frames.ShakeGameFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_PARAM1, gameId);
             return fragment;
         }
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            if (getArguments() != null) {
-                gameId = savedInstanceState.getInt(ARG_PARAM1);
-            }
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            System.out.println(gameId);
             activeView = inflater.inflate(R.layout.fragment_shake_game, container, false);
-            game = new ShakeGame(getActivity());
+            game = (ShakeGame)GamePlan.getGameLogic().getGame().getGame();
             game.addObserver(this);
             game.setCallBack(true);
             game.setAlertDistance(50);
+            game.startGame(getActivity());
 
             return activeView;
         }

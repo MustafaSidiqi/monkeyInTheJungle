@@ -21,13 +21,16 @@ public class ShakeGame extends Observable {
 
 
 
-    public ShakeGame(Activity act) {
-        sensorManager = (SensorManager) act.getSystemService(Context.SENSOR_SERVICE);
-        sensorManager.registerListener(sensorListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+    public ShakeGame() {
         callBackEnable = false;
         alertCallBackEnable = false;
     }
 
+    public void startGame(Activity act) {
+        sensorManager = (SensorManager) act.getSystemService(Context.SENSOR_SERVICE);
+        sensorManager.registerListener(sensorListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+
+    }
     public float getShake() {
         return shake;
     }
