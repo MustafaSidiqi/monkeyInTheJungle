@@ -4,18 +4,18 @@ import com.example.taras.monkeyinthejungle.games.MissingNumberGame;
 
 import java.util.ArrayList;
 
-public class GamesLogic {
+public class GameLogic {
     private ArrayList<Object> games;
     private int stateIndex;
 
-    public GamesLogic() {
+    public GameLogic() {
         // here should be created a game list for defined by options
         games = new ArrayList<>();
         stateIndex = 0;
         games.add(new MissingNumberGame());
     }
 
-    public Object getGame() {
+    public Object getByIdGame() {
         return stateIndex < games.size() ? games.get(stateIndex) : null;
     }
 }
