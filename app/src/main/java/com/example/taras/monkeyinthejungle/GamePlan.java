@@ -2,17 +2,21 @@ package com.example.taras.monkeyinthejungle;
 
 public class GamePlan {
     private static final GamePlan ourInstance = new GamePlan();
-    private static GameLogic games;
+    private static GameLogic game;
 
     public static GamePlan getInstance() {
         return ourInstance;
     }
 
     public static GameLogic gateGameLogic() {
-     if(games == null) {
-         games = new GameLogic();
+     if(game == null) {
+         game = new GameLogic();
      }
-     return games;
+     return game;
+    }
+
+    public static void deleteGame(){
+     game = null;
     }
 
     private GamePlan() {
