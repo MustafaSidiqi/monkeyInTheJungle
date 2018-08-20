@@ -15,13 +15,27 @@ import java.util.Collections;
 
 public class TwoPairsFragment extends Fragment implements OnClickListener {
 
-    ImageView imgView_11, imgView_12, imgView_13, imgView_14, imgView_21, imgView_22, imgView_23, imgView_24;
+    ImageView imgView_11,
+            imgView_12,
+            imgView_13,
+            imgView_14,
+            imgView_21,
+            imgView_22,
+            imgView_23,
+            imgView_24;
 
     //Array for images
     Integer[] cardArray = {101, 102, 103, 104, 201, 202, 203, 204};
 
     //Images
-    int img101, img102, img103, img104, img201, img202, img203, img204;
+    int img101,
+            img102,
+            img103,
+            img104,
+            img201,
+            img202,
+            img203,
+            img204;
 
     int firstCard, secondCard;
     int clickedFirst, clickedSecond;
@@ -69,7 +83,6 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
         imgView_22.setOnClickListener(this);
         imgView_23.setOnClickListener(this);
         imgView_24.setOnClickListener(this);
-
     }
 
     private void loadCardImages() {
@@ -85,24 +98,35 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
 
     private void runCard(ImageView imgView, int theCard) {
         System.out.println("theCard " + theCard);
-        if(cardArray[theCard] == 101) {
-            imgView.setImageResource(img101);
-        } else if(cardArray[theCard] == 101) {
-            imgView.setImageResource(img101);
-        } else if(cardArray[theCard] == 102) {
-            imgView.setImageResource(img102);
-        } else if(cardArray[theCard] == 103) {
-            imgView.setImageResource(img103);
-        } else if(cardArray[theCard] == 104) {
-            imgView.setImageResource(img104);
-        } else if(cardArray[theCard] == 201) {
-            imgView.setImageResource(img201);
-        } else if(cardArray[theCard] == 202) {
-            imgView.setImageResource(img202);
-        } else if(cardArray[theCard] == 203) {
-            imgView.setImageResource(img203);
-        } else if(cardArray[theCard] == 204) {
-            imgView.setImageResource(img204);
+
+        switch (cardArray[theCard]){
+            case 101:
+                imgView.setImageResource(img101);
+                break;
+            case 102:
+                imgView.setImageResource(img102);
+                break;
+            case 103:
+                imgView.setImageResource(img103);
+                break;
+            case 104:
+                imgView.setImageResource(img104);
+                break;
+            case 201:
+                imgView.setImageResource(img201);
+                break;
+            case 202:
+                imgView.setImageResource(img202);
+                break;
+            case 203:
+                imgView.setImageResource(img203);
+                break;
+            case 204:
+                imgView.setImageResource(img204);
+                break;
+            default:
+                Log.e("SNH", "Unknown Value");
+                break;
         }
 
         //Which image is selected and save it in temp variable 
@@ -113,7 +137,6 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
             }
             cardNum = 2;
             clickedFirst = theCard;
-
             imgView.setEnabled(false);
         } else if (cardNum == 2) {
             secondCard = cardArray[theCard];
@@ -145,43 +168,68 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
     private void calculate() {
         // If images are eqaul remove them and point
         if(firstCard == secondCard) {
-            if(clickedFirst == 0) {
-                imgView_11.setVisibility(View.INVISIBLE);
-            } else if(clickedFirst == 1) {
-                imgView_12.setVisibility(View.INVISIBLE);
-            } else if(clickedFirst == 2) {
-                imgView_13.setVisibility(View.INVISIBLE);
-            } else if(clickedFirst == 3) {
-                imgView_14.setVisibility(View.INVISIBLE);
-            } else if(clickedFirst == 4) {
-                imgView_21.setVisibility(View.INVISIBLE);
-            } else if(clickedFirst == 5) {
-                imgView_22.setVisibility(View.INVISIBLE);
-            } else if(clickedFirst == 6) {
-                imgView_23.setVisibility(View.INVISIBLE);
-            } else if(clickedFirst == 7) {
-                imgView_24.setVisibility(View.INVISIBLE);
+
+            switch (clickedFirst){
+                case 0:
+                    imgView_11.setVisibility(View.INVISIBLE);
+                    break;
+                case 1:
+                    imgView_12.setVisibility(View.INVISIBLE);
+                    break;
+                case 2:
+                    imgView_13.setVisibility(View.INVISIBLE);
+                    break;
+                case 3:
+                    imgView_14.setVisibility(View.INVISIBLE);
+                    break;
+                case 4:
+                    imgView_21.setVisibility(View.INVISIBLE);
+                    break;
+                case 5:
+                    imgView_22.setVisibility(View.INVISIBLE);
+                    break;
+                case 6:
+                    imgView_23.setVisibility(View.INVISIBLE);
+                    break;
+                case 7:
+                    imgView_24.setVisibility(View.INVISIBLE);
+                    break;
+                default:
+                    Log.e("SNH", "Unknown Value");
+                    break;
             }
 
-            if(clickedSecond == 0) {
-                imgView_11.setVisibility(View.INVISIBLE);
-            } else if(clickedSecond == 1) {
-                imgView_12.setVisibility(View.INVISIBLE);
-            } else if(clickedSecond == 2) {
-                imgView_13.setVisibility(View.INVISIBLE);
-            } else if(clickedSecond == 3) {
-                imgView_14.setVisibility(View.INVISIBLE);
-            } else if(clickedSecond == 4) {
-                imgView_21.setVisibility(View.INVISIBLE);
-            } else if(clickedSecond == 5) {
-                imgView_22.setVisibility(View.INVISIBLE);
-            } else if(clickedSecond == 6) {
-                imgView_23.setVisibility(View.INVISIBLE);
-            } else if(clickedSecond == 7) {
-                imgView_24.setVisibility(View.INVISIBLE);
+            switch (clickedSecond){
+                case 0:
+                    imgView_11.setVisibility(View.INVISIBLE);
+                    break;
+                case 1:
+                    imgView_12.setVisibility(View.INVISIBLE);
+                    break;
+                case 2:
+                    imgView_13.setVisibility(View.INVISIBLE);
+                    break;
+                case 3:
+                    imgView_14.setVisibility(View.INVISIBLE);
+                    break;
+                case 4:
+                    imgView_21.setVisibility(View.INVISIBLE);
+                    break;
+                case 5:
+                    imgView_22.setVisibility(View.INVISIBLE);
+                    break;
+                case 6:
+                    imgView_23.setVisibility(View.INVISIBLE);
+                    break;
+                case 7:
+                    imgView_24.setVisibility(View.INVISIBLE);
+                    break;
+                default:
+                    Log.e("SNH", "Unknown Value");
+                    break;
             }
+
             points++;
-
         } else {
             imgView_11.setImageResource(R.drawable.img_back);
             imgView_12.setImageResource(R.drawable.img_back);
@@ -201,7 +249,6 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
         imgView_22.setEnabled(true);
         imgView_23.setEnabled(true);
         imgView_24.setEnabled(true);
-
     }
 
 
