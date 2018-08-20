@@ -44,23 +44,15 @@ public class ShakeGameFragment extends Fragment implements Observer {
         }
 
         @Override
-        public void onDestroyView() {
-            game.deleteObserver(this);
-            super.onDestroyView();
-
-
+        public void onDetach() {
+                game.deleteObserver(this);
+            super.onDetach();
         }
 
-    @Override
-    public void onDestroy() {
-        game.deleteObserver(this);
-        super.onDestroy();
-    }
-
-    public void update(Observable obj, Object arg) {
-            if((String)arg != "round:complete:true" ) {
-                TextView result = activeView.findViewById(R.id.txt_shake_result);
-                result.setText((String)arg);
-            }
+        public void update(Observable obj, Object arg) {
+                if((String)arg != "round:complete:true" ) {
+                    TextView result = activeView.findViewById(R.id.txt_shake_result);
+                    result.setText((String)arg);
+                }
         }
     }
