@@ -10,6 +10,7 @@
     <string name="str_collect_word_header">Collect A Word</string>
     <string name="str_reset">Reset</string>
     <string name="str_shake_game_header">Shake Your Phone </string>
+    <string name="str_single_player_skip">Skip</string>
 
 
     <!-- test strings -->

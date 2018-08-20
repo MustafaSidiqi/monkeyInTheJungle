@@ -23,6 +23,7 @@ public class WordCollectorGameFragment extends Fragment {
     private char shuffledWord[];
     private String answer;
     private Button allButtons[];
+    private WordCollectorGame game;
 
     public WordCollectorGameFragment() {
     }
@@ -45,15 +46,16 @@ public class WordCollectorGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         System.out.println(gameId);
         activeView = inflater.inflate(R.layout.fragment_word_collector_game, container, false);
-        WordCollectorGame game = (WordCollectorGame) GamePlan.getGameLogic().getGame().getGame();
-        setValues(game, activeView);
+        game = (WordCollectorGame) GamePlan.getGameLogic().getGame().getGame();
+        setValues(activeView);
         setResetButtonListener(activeView);
         return activeView;
     }
 
-    private void setValues(WordCollectorGame game,View v ) {
+    private void setValues(View v ) {
         shuffledWord = game.getShuffledWord();
         answer = game.getWord();
+        System.out.println(answer);
         Activity activity = getActivity();
         LinearLayout mainLayout = v.findViewById(R.id.lnl_collect_word_layout);
         LinearLayout line = setNewLine(activity);
@@ -76,8 +78,10 @@ public class WordCollectorGameFragment extends Fragment {
                     String collectedWord = result.getText() + txt;
                     result.setText(collectedWord);
                     activeView.findViewById(v.getId()).setVisibility(View.INVISIBLE);
+                    System.out.println(collectedWord);
+                    System.out.println(answer);
                     if(collectedWord.equals(answer)) {
-                        result.setText("correct");
+                        game.markAsFinished(true);
                     }
                 }
             });
@@ -106,5 +110,4 @@ public class WordCollectorGameFragment extends Fragment {
             }
         });
     }
-
 }

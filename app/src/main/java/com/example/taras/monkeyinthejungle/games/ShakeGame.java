@@ -15,15 +15,11 @@ import java.util.Observable;
 public class ShakeGame extends Observable {
     private SensorManager sensorManager;
     private float shake;
-    private boolean callBackEnable;
-    private boolean alertCallBackEnable;
     private int alertDistance;
 
 
 
     public ShakeGame() {
-        callBackEnable = false;
-        alertCallBackEnable = false;
     }
 
     public void startGame(Activity act) {
@@ -31,18 +27,10 @@ public class ShakeGame extends Observable {
         sensorManager.registerListener(sensorListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
 
     }
-    public float getShake() {
-        return shake;
-    }
 
     public void setAlertDistance(int distance) {
         alertDistance = distance;
-        alertCallBackEnable = true;
 
-    }
-
-    public void setCallBack(boolean b){
-        callBackEnable = b;
     }
 
     private final SensorEventListener sensorListener = new SensorEventListener() {
@@ -56,13 +44,11 @@ public class ShakeGame extends Observable {
             if(distance > 0.05) {
                 shake += distance;
             }
-            if (callBackEnable ) {
+            if (shake >= alertDistance ) {
+                markAsFinished();
+            }else{
                 setChanged();
                 notifyObservers("" + shake);
-            }
-            if(alertCallBackEnable && shake >= alertDistance) {
-                setChanged();
-                notifyObservers("done");
             }
         }
 
@@ -71,5 +57,11 @@ public class ShakeGame extends Observable {
 
         }
     };
+
+    private void markAsFinished() {
+        setChanged();
+        notifyObservers("round:complete:true");
+        deleteObservers();
+    }
 
 }

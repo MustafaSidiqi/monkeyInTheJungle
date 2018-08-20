@@ -1,9 +1,10 @@
 package com.example.taras.monkeyinthejungle.games;
 
+import java.util.Observable;
 import java.util.Random;
 
 
-public class WordCollectorGame {
+public class WordCollectorGame extends Observable {
     private final String[] randomWords = {
             "There", "Are", "Multiple", "Depth", "Features", "Such", "product", "review",
             "laptop", "digital", "audio", "player", "technology", "editorial", "digital",
@@ -36,5 +37,13 @@ public class WordCollectorGame {
     }
     public String getWord() {
         return word;
+    }
+
+    public void markAsFinished(boolean correct) {
+        String m = correct ? "round:complete:true" : "round:complete:false";
+        setChanged();
+        System.out.println("TEST HMMM");
+        notifyObservers(m);
+        deleteObservers();
     }
 }

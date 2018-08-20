@@ -14,6 +14,7 @@ import com.example.taras.monkeyinthejungle.games.MissingNumberGame;
 
 public class MissingNumberGameFragment extends Fragment {
     private View activeView;
+    private MissingNumberGame game;
     private int answerButton;
     public MissingNumberGameFragment() {
     }
@@ -33,13 +34,13 @@ public class MissingNumberGameFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         activeView = inflater.inflate(R.layout.fragment_missing_number_game, container, false);
-        MissingNumberGame game = (MissingNumberGame)GamePlan.getGameLogic().getGame().getGame();
-        setValues(activeView, game);
+        game = (MissingNumberGame)GamePlan.getGameLogic().getGame().getGame();
+        setValues(activeView);
 
         return activeView;
     }
 
-    private void setValues(View view, MissingNumberGame game){
+    private void setValues(View view){
         TextView txtEquation = (TextView)view.findViewById(R.id.txt_missing_number_equation);
         txtEquation.setText(game.getEquation());
         int optionsIds[] = {
@@ -56,10 +57,12 @@ public class MissingNumberGameFragment extends Fragment {
             btnOption.setOnClickListener((new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TextView txtEquation = (TextView)activeView.findViewById(R.id.txt_missing_number_equation);
-                    String text =  v.getId() == answerButton ? "correct" : "false";
-                    txtEquation.setText(text);
-
+                    if ( v.getId() == answerButton ) {
+                        game.markAsFinished(true);
+                    }
+                    else{
+                        game.markAsFinished(false);
+                    }
                 }
             })
             );

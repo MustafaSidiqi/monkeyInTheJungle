@@ -37,7 +37,6 @@ public class ShakeGameFragment extends Fragment implements Observer {
             activeView = inflater.inflate(R.layout.fragment_shake_game, container, false);
             game = (ShakeGame)GamePlan.getGameLogic().getGame().getGame();
             game.addObserver(this);
-            game.setCallBack(true);
             game.setAlertDistance(50);
             game.startGame(getActivity());
 
@@ -46,18 +45,22 @@ public class ShakeGameFragment extends Fragment implements Observer {
 
         @Override
         public void onDestroyView() {
-            super.onDestroyView();
             game.deleteObserver(this);
-            Log.d("test","destroy");
+            super.onDestroyView();
+
 
         }
 
-        public void update(Observable obj, Object arg) {
+    @Override
+    public void onDestroy() {
+        game.deleteObserver(this);
+        super.onDestroy();
+    }
+
+    public void update(Observable obj, Object arg) {
+            if((String)arg != "round:complete:true" ) {
                 TextView result = activeView.findViewById(R.id.txt_shake_result);
                 result.setText((String)arg);
-                if((String)arg == "done" ) {
-                    result.setText("YO Big Shuck, you done now");
-                    game.setCallBack(false);
-                }
+            }
         }
     }

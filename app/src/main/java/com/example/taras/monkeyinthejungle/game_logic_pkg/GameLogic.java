@@ -1,24 +1,35 @@
 package com.example.taras.monkeyinthejungle.game_logic_pkg;
+import java.util.Observable;
 
-import com.example.taras.monkeyinthejungle.games.MissingNumberGame;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
-public class GameLogic {
+public class GameLogic extends Observable {
     private GameNode games[];
     private int stateIndex;
 
     public GameLogic() {
         GameListGenerator generator = new GameListGenerator();
-        games = generator.getGameList();
+        games = generator.getGameList(this);
         stateIndex = 0;
     }
 
     public GameNode getGame() {
-        return stateIndex < games.length ? games[stateIndex] : null;
+        return games[stateIndex];
     }
 
+    public void skip(){
+        nextRound();
+    }
 
+    public void update(String s) {
+        nextRound();
+    }
+
+    private void nextRound() {
+        stateIndex++;
+        setChanged();
+        if(stateIndex < games.length ) {
+            notifyObservers("game:nextRound");
+        }
+        notifyObservers("game:done");
+    }
 
 }

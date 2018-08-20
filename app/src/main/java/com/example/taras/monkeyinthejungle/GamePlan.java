@@ -5,7 +5,6 @@ import com.example.taras.monkeyinthejungle.game_logic_pkg.GameLogic;
 public class GamePlan {
     private static final GamePlan ourInstance = new GamePlan();
     private static GameLogic game;
-
     public static GamePlan getInstance() {
         return ourInstance;
     }
