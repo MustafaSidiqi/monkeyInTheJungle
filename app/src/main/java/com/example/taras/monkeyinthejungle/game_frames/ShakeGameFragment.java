@@ -2,6 +2,7 @@ package com.example.taras.monkeyinthejungle.game_frames;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class ShakeGameFragment extends Fragment implements Observer {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             System.out.println(gameId);
-            activeView = inflater.inflate(R.layout.fragment_missing_number_game, container, false);
+            activeView = inflater.inflate(R.layout.fragment_shake_game, container, false);
             game = new ShakeGame(getActivity());
             game.addObserver(this);
             game.setCallBack(true);
@@ -53,10 +54,16 @@ public class ShakeGameFragment extends Fragment implements Observer {
         public void onDestroyView() {
             super.onDestroyView();
             game.deleteObserver(this);
+            Log.d("test","destroy");
+
         }
 
         public void update(Observable obj, Object arg) {
-                TextView result = activeView.findViewById(R.id.txt_result_world_collector);
+                TextView result = activeView.findViewById(R.id.txt_shake_result);
                 result.setText((String)arg);
+                if((String)arg == "done" ) {
+                    result.setText("YO Big Shuck, you done now");
+                    game.setCallBack(false);
+                }
         }
     }

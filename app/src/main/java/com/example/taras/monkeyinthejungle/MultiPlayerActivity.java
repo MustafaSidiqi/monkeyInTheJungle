@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.taras.monkeyinthejungle.game_frames.MissingNumberGameFragment;
+import com.example.taras.monkeyinthejungle.game_frames.ShakeGameFragment;
 import com.example.taras.monkeyinthejungle.game_frames.WordCollectorGameFragment;
 
 public class MultiPlayerActivity extends AppCompatActivity {
@@ -39,11 +40,12 @@ public class MultiPlayerActivity extends AppCompatActivity {
     private void setFrame() {
         MissingNumberGameFragment test = new MissingNumberGameFragment();
         WordCollectorGameFragment test2 = new WordCollectorGameFragment();
+        ShakeGameFragment test3 = new ShakeGameFragment();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =
                 fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frg_multi_player_game_view, test2.newInstance(5));
+        fragmentTransaction.replace(R.id.frg_multi_player_game_view, test3.newInstance(5));
         fragmentTransaction.commit();
     }
 }
