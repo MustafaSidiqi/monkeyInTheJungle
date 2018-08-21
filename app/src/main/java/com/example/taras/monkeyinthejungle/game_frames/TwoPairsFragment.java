@@ -1,4 +1,4 @@
-package com.example.taras.monkeyinthejungle;
+package com.example.taras.monkeyinthejungle.game_frames;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.example.taras.monkeyinthejungle.R;
 
 import java.util.Arrays;
 import java.util.Collections;

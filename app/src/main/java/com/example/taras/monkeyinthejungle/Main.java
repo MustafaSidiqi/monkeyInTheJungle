@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.taras.monkeyinthejungle.game_frames.TwoPairsFragment;
+
 public class Main extends AppCompatActivity implements View.OnClickListener {
     Intent intSinglePlayer;
     Intent intMultiPlayer;
