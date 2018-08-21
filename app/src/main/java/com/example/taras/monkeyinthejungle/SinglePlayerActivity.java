@@ -30,7 +30,7 @@ public class SinglePlayerActivity extends AppCompatActivity implements Observer 
     private ProgressBar mProgressBar;
     private CountDownTimer mCountDownTimer;
     private int gameTime;
-
+    private Button btnSkip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,11 +91,25 @@ public class SinglePlayerActivity extends AppCompatActivity implements Observer 
         if(mCountDownTimer != null) {
             mCountDownTimer.cancel();
         }
-        if( arg == "game:nextRound") {
-            setFrame();
-        }
-        if ( arg == "game:done") {
-            System.out.println("done:" + logic.getTotalPoints());
+        switch((String)arg) {
+            case "game:nextRound":
+                setFrame();
+                break;
+            case "game:done":
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction =
+                        fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frg_single_game_replace_fragment, (new FinishGameFragment()).newInstance());
+                fragmentTransaction.commit();
+                mProgressBar.setVisibility(View.INVISIBLE);
+                btnSkip.setVisibility(View.INVISIBLE);
+                break;
+            case "game:newGame":
+                mProgressBar.setVisibility(View.VISIBLE);
+                btnSkip.setVisibility(View.VISIBLE);
+                setFrame();
+                break;
+            default: break;
         }
 
     }
@@ -108,7 +122,7 @@ public class SinglePlayerActivity extends AppCompatActivity implements Observer 
     }
 
     private void setButtonEventListener(){
-        Button btnSkip = findViewById(R.id.btn_single_player_skip);
+        btnSkip = findViewById(R.id.btn_single_player_skip);
 
         btnSkip.setOnClickListener(new View.OnClickListener(){
             @Override

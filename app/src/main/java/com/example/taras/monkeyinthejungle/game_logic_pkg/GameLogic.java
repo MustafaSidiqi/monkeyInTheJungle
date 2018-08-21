@@ -12,6 +12,7 @@ public class GameLogic extends Observable {
     private final int pointsPrGame = 100;
 
 
+    private GameListGenerator generator;
     private GameNode games[];
     private int stateIndex;
     private CountDownTimer timer;
@@ -19,10 +20,8 @@ public class GameLogic extends Observable {
     private int pointArray[][];
 
     public GameLogic() {
-        GameListGenerator generator = new GameListGenerator();
-        games = generator.getGameList();
-        pointArray = new int[games.length][2];
-        stateIndex = 0;
+        generator = new GameListGenerator();
+        newGameList();
     }
 
     public GameNode getGame() {
@@ -39,6 +38,28 @@ public class GameLogic extends Observable {
 
     public void startRound() {
         timeStart = System.currentTimeMillis();
+    }
+
+    public int getTotalPoints() {
+        int points = 0;
+        int time = 0;
+        for (int i = 0; i < pointArray.length; i++){
+            points = pointArray[i][0];
+            time = pointArray[i][1];
+        }
+        return points == 0 ? 0 : (int)(points * 1.5) - time;
+    }
+
+    public void newGame() {
+        newGameList();
+        setChanged();
+        notifyObservers("game:newGame");
+    }
+
+    private void newGameList() {
+        games = generator.getGameList();
+        pointArray = new int[games.length][2];
+        stateIndex = 0;
     }
 
     private void nextRound(int status  ) {
@@ -69,16 +90,6 @@ public class GameLogic extends Observable {
         }
         pointArray[stateIndex][1] = time;
 
-    }
-
-    public int getTotalPoints() {
-        int points = 0;
-        int time = 0;
-        for (int i = 0; i < pointArray.length; i++){
-            points = pointArray[i][0];
-            time = pointArray[i][1];
-        }
-        return points == 0 ? 0 : (int)(points * 1.5) - time;
     }
 
 }
