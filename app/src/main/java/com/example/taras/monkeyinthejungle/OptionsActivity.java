@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
     private HashMap<String, Boolean> gamesToBePlayed = new HashMap<String, Boolean>();
     private boolean randomGames;
     private int numberOfRounds = 1;
+    private String username;
     private SeekBar seekBar;
 
     TextView tvProgressLabel;
@@ -41,6 +43,7 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
             find_the_number_s,
             random_games_s;
 
+    private EditText userTv;
     public HashMap<String, Boolean> getGamesToBePlayed() {
         return gamesToBePlayed;
     }
@@ -63,6 +66,7 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
         find_the_number_s = (Switch) findViewById(R.id.find_the_num_boolean);
         word_collector_s = (Switch) findViewById(R.id.word_collector_boolean);
         random_games_s = (Switch) findViewById(R.id.random_boolean);
+        userTv = (EditText)findViewById(R.id.username_input);
 
         loadMap();
 
@@ -73,6 +77,7 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
         word_collector_s.setChecked(gamesToBePlayed.get("word_collector"));
         random_games_s.setChecked(isRandomGames());
         seekBar.setProgress(getNumberOfRounds());
+        userTv.setText(username);
     }
 
     @Override
@@ -115,14 +120,6 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         myPrefs = getSharedPreferences("monkey", Context.MODE_PRIVATE);
 
-        // initiate a Switch
-        two_pair_s = (Switch) findViewById(R.id.two_pair_boolean);
-        tap_counter_s = (Switch) findViewById(R.id.tap_counter_boolean);
-        shake_it_s = (Switch) findViewById(R.id.shake_it_boolean);
-        find_the_number_s = (Switch) findViewById(R.id.find_the_num_boolean);
-        word_collector_s = (Switch) findViewById(R.id.word_collector_boolean);
-        random_games_s = (Switch) findViewById(R.id.random_boolean);
-
         // check current state of a Switch (true or false).
         Boolean two_pair = two_pair_s.isChecked();
         Boolean tap_counter = tap_counter_s.isChecked();
@@ -132,6 +129,7 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
 
         randomGames = random_games_s.isChecked();
         numberOfRounds = seekBar.getProgress();
+        username = userTv.getText().toString();
 
         gamesToBePlayed.put("two_pair", two_pair);
         gamesToBePlayed.put("tap_counter", tap_counter);
@@ -174,6 +172,7 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
             editor.putString("My_map", jsonString);
             editor.putInt("numberOfRounds", numOfRound);
             editor.putBoolean("randomBool", rand);
+            editor.putString("username", username);
             editor.commit();
         }
     }
@@ -196,6 +195,7 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
 
                  randomGames = pref.getBoolean("randomBool", false);
                  numberOfRounds = pref.getInt("numberOfRounds", 1);
+                 username = pref.getString("username", "");
             }
         } catch(Exception e){
             e.printStackTrace();

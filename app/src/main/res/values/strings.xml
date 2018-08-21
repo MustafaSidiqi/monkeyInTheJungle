@@ -5,12 +5,13 @@
     <string name="str_score">Score</string>
     <string name="str_options">Options</string>
     <string name="str_random">Random</string>
-    <string name="str_number_of_games">Number Of Rounds</string>
+    <string name="str_number_of_games">Number Of Rounds:</string>
     <string name="str_TwoPair">Two Pair</string>
     <string name="str_TapCounter">Tap Counter</string>
     <string name="str_ShakeIt">Shake It</string>
     <string name="str_FindTheNumber">Find The Number</string>
     <string name="str_WordCollector">Word Collector</string>
+    <string name="str_username">Username:</string>
     <string name="btn_save">Save</string>
 
 
