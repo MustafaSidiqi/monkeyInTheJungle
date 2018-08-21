@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import com.example.taras.monkeyinthejungle.game_frames.MissingNumberGameFragment;
 import com.example.taras.monkeyinthejungle.game_frames.ShakeGameFragment;
 import com.example.taras.monkeyinthejungle.game_frames.TapCounterFragment;
+import com.example.taras.monkeyinthejungle.game_frames.TwoPairsFragment;
 import com.example.taras.monkeyinthejungle.game_frames.WordCollectorGameFragment;
 import com.example.taras.monkeyinthejungle.game_logic_pkg.GameLogic;
 import com.example.taras.monkeyinthejungle.game_logic_pkg.GameNode;
@@ -65,7 +66,7 @@ public class SinglePlayerActivity extends AppCompatActivity implements Observer 
                 fragmentManager.beginTransaction();
         switch(game.getType()) {
             case "two_pair":
-                Log.d("RTE", "Trying To Create Unknown Game");
+                fragmentTransaction.replace(R.id.frg_single_game_replace_fragment, (new TwoPairsFragment()).newInstance());
                 break;
             case "tap_counter":
                 fragmentTransaction.replace(R.id.frg_single_game_replace_fragment, (new TapCounterFragment()).newInstance());
@@ -134,7 +135,7 @@ public class SinglePlayerActivity extends AppCompatActivity implements Observer 
     }
 
     private void setTimer(GameNode game ) {
-        gameTime = 10 * 10;
+        gameTime = game.getRoundTime() * 10;
         mProgressBar.setMax(gameTime);
         mProgressBar.setProgress(gameTime);
         mCountDownTimer=new CountDownTimer(gameTime * 100,100) {

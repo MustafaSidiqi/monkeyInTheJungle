@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.taras.monkeyinthejungle.games.MissingNumberGame;
 import com.example.taras.monkeyinthejungle.games.ShakeGame;
 import com.example.taras.monkeyinthejungle.games.TapCounter;
+import com.example.taras.monkeyinthejungle.games.TwoPairs;
 import com.example.taras.monkeyinthejungle.games.WordCollectorGame;
 
 import java.util.ArrayList;
@@ -29,8 +30,7 @@ public class GameListGenerator {
         for( int i = 0; i < roundsCount; i++ ) {
             switch(allowedGames.get(random.nextInt(allowedGames.size()))) {
                 case "two_pair":
-                    Log.d("RTE", "Trying To Create Unknown Game");
-                    i--;
+                    games[i] = new GameNode("two_pair", new TwoPairs(),random.nextInt(25) + 50);
                     break;
                 case "tap_counter":
                     games[i] = new GameNode("tap_counter", new TapCounter(),random.nextInt(5)+ 5);
