@@ -1,5 +1,7 @@
 package com.example.taras.monkeyinthejungle;
 
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.example.taras.monkeyinthejungle.game_frames.MissingNumberGameFragment;
 import com.example.taras.monkeyinthejungle.game_frames.ShakeGameFragment;
@@ -24,6 +27,9 @@ public class SinglePlayerActivity extends AppCompatActivity implements Observer 
 
     private View mContentView;
     private GameLogic logic;
+    private ProgressBar mProgressBar;
+    private CountDownTimer mCountDownTimer;
+    private int gameTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,7 @@ public class SinglePlayerActivity extends AppCompatActivity implements Observer 
         setFullScreenView();
         logic = GamePlan.getGameLogic();
         logic.addObserver(this);
+        mProgressBar=(ProgressBar)findViewById(R.id.prg_single_aktv_progress_bar);
         setFrame();
     }
 
@@ -52,6 +59,7 @@ public class SinglePlayerActivity extends AppCompatActivity implements Observer 
 
     private void setFrame() {
         GameNode game = logic.getGame();
+        setTimer(game);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =
                 fragmentManager.beginTransaction();
@@ -106,5 +114,25 @@ public class SinglePlayerActivity extends AppCompatActivity implements Observer 
                 setFrame();
             }
         });
+    }
+
+    private void setTimer(GameNode game ) {
+        gameTime = 10 * 10;
+        mProgressBar.setMax(gameTime);
+        mProgressBar.setProgress(gameTime);
+        mCountDownTimer=new CountDownTimer(gameTime * 100,100) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                gameTime--;
+                mProgressBar.setProgress((int)gameTime);
+
+            }
+            @Override
+            public void onFinish() {
+                mProgressBar.setProgress(1);
+                logic.skip();
+            }
+        };
+        mCountDownTimer.start();
     }
 }

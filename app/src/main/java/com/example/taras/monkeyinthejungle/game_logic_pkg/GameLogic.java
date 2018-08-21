@@ -1,5 +1,8 @@
 package com.example.taras.monkeyinthejungle.game_logic_pkg;
+import android.os.CountDownTimer;
+
 import java.util.Observable;
+
 
 public class GameLogic extends Observable {
     public final int SKIP = 0;
@@ -8,7 +11,8 @@ public class GameLogic extends Observable {
 
     private GameNode games[];
     private int stateIndex;
-
+    private CountDownTimer timer;
+    private long timeStart;
     public GameLogic() {
         GameListGenerator generator = new GameListGenerator();
         games = generator.getGameList();
@@ -26,14 +30,19 @@ public class GameLogic extends Observable {
     public void success() { nextRound(SUCCESS);}
 
     public void fail() { nextRound(FAIL);}
+    public void startRound() {
+        timeStart = System.currentTimeMillis();
+    }
 
     private void nextRound(int status  ) {
+
         stateIndex++;
         setChanged();
         if(stateIndex < games.length ) {
             notifyObservers("game:nextRound");
         }
         notifyObservers("game:done");
+
     }
 
 }

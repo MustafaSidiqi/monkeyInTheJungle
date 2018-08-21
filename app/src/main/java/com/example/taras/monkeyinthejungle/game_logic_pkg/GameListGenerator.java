@@ -37,14 +37,17 @@ public class GameListGenerator {
                     break;
                 case "shake_it":
                     ShakeGame g = new ShakeGame();
-                    g.setAlertDistance(random.nextInt(100) + 25);
-                    games[i] = new GameNode("shake_it", g);
+                    g.setAlertDistance(random.nextInt(75) + 25);
+                    games[i] = new GameNode("shake_it", g, random.nextInt( 20 ) + 10);
                     break;
                 case "find_the_number":
-                    games[i] = new GameNode("find_the_number", new MissingNumberGame());
+                    games[i] = new GameNode("find_the_number", new MissingNumberGame(), random.nextInt(5)+ 5);
                     break;
                 case "word_collector":
-                    games[i] = new GameNode("word_collector", new WordCollectorGame());
+                    WordCollectorGame w = new WordCollectorGame();
+                    int wordlength = w.getWord().length();
+                    wordlength =(int)Math.pow(wordlength, 1.5);
+                    games[i] = new GameNode("word_collector", new WordCollectorGame(), random.nextInt(wordlength) + 10);
                     break;
                 default:
                     Log.e("RTE", "Trying To Create Unknown Game");

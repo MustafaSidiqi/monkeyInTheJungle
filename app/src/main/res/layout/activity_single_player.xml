@@ -12,6 +12,15 @@
         android:id="@+id/cnl_single_player_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/prg_single_aktv_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="20"
+            android:progressDrawable="@drawable/progress"  />
 
         <Button
             android:id="@+id/btn_single_player_skip"

@@ -1,7 +1,12 @@
 package com.example.taras.monkeyinthejungle.game_frames;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -24,7 +29,7 @@ public class ShakeGameFragment extends Fragment {
         private MutableLiveData<Integer> LiveShakeUpdater;
         private GameLogic gameTracker;
         private int targetDistance;
-
+        private MediaPlayer mp;
         public ShakeGameFragment() {
 
         }
@@ -48,13 +53,21 @@ public class ShakeGameFragment extends Fragment {
             game.startGame(getActivity());
             LiveShakeUpdater = game.getLiveData();
             targetDistance = game.getDistance();
+            // mp = MediaPlayer.create(this, R.raw.soho);
             LiveShakeUpdater.observe(this, new android.arch.lifecycle.Observer<Integer>() {
                 @Override
                 public void onChanged(@Nullable Integer resultCount) {
                     TextView result =  activeView.findViewById(R.id.txt_shake_result);
                     result.setText(resultCount +"");
                     if(resultCount.equals(targetDistance)) {
+                        Vibrator v = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                        if(Build.VERSION.SDK_INT < 26) {
+                            v.vibrate(1000);
+                        }else {
+                            v.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE));
+                        }
                         gameTracker.success();
+
                     }
                 }
             });
