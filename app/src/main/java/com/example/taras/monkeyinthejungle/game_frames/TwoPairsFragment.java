@@ -11,11 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.taras.monkeyinthejungle.R;
+import com.example.taras.monkeyinthejungle.games.TwoPairs;
 
 import java.util.Arrays;
 import java.util.Collections;
 
 public class TwoPairsFragment extends Fragment implements OnClickListener {
+
+    TwoPairs twopairs = new TwoPairs();
 
     ImageView imgView_11,
             imgView_12,
@@ -25,9 +28,6 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
             imgView_22,
             imgView_23,
             imgView_24;
-
-    //Array for images
-    Integer[] cardArray = {101, 102, 103, 104, 201, 202, 203, 204};
 
     //Images
     int img101,
@@ -39,10 +39,6 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
             img203,
             img204;
 
-    int firstCard, secondCard;
-    int clickedFirst, clickedSecond;
-    int cardNum = 1;
-    int points;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +48,8 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
+
+        twopairs.shuffleArray();
 
         imgView_11 = (ImageView) getView().findViewById(R.id.img_11);
         imgView_12 = (ImageView) getView().findViewById(R.id.img_12);
@@ -73,9 +71,6 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
 
         //Load the images
         loadCardImages();
-
-        //Shuffle the cards
-        Collections.shuffle(Arrays.asList(cardArray));
 
         imgView_11.setOnClickListener(this);
         imgView_12.setOnClickListener(this);
@@ -101,7 +96,7 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
     private void runCard(ImageView imgView, int theCard) {
         System.out.println("theCard " + theCard);
 
-        switch (cardArray[theCard]){
+        switch (twopairs.getCardArrayIndex(theCard)){
             case 101:
                 imgView.setImageResource(img101);
                 break;
@@ -132,21 +127,21 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
         }
 
         //Which image is selected and save it in temp variable 
-        if(cardNum == 1) {
-            firstCard = cardArray[theCard];
-            if(firstCard > 200) {
-                firstCard = firstCard - 100;
+        if(twopairs.getCardNum() == 1) {
+            twopairs.setFirstCard(twopairs.getCardArrayIndex(theCard));
+            if(twopairs.getFirstCard() > 200) {
+                twopairs.setFirstCard(twopairs.getFirstCard() - 100);
             }
-            cardNum = 2;
-            clickedFirst = theCard;
+            twopairs.setCardNum(2);
+            twopairs.setClickedFirst(theCard);
             imgView.setEnabled(false);
-        } else if (cardNum == 2) {
-            secondCard = cardArray[theCard];
-            if(secondCard > 200) {
-                secondCard = secondCard - 100;
+        } else if (twopairs.getCardNum() == 2) {
+            twopairs.setSecondCard(twopairs.getCardArrayIndex(theCard));
+            if(twopairs.getSecondCard() > 200) {
+                twopairs.setSecondCard(twopairs.getSecondCard() - 100);
             }
-            cardNum = 1;
-            clickedSecond = theCard;
+            twopairs.setCardNum(1);
+            twopairs.setClickedSecond(theCard);
 
             imgView_11.setEnabled(false);
             imgView_12.setEnabled(false);
@@ -169,9 +164,9 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
 
     private void calculate() {
         // If images are eqaul remove them and point
-        if(firstCard == secondCard) {
+        if(twopairs.getFirstCard() == twopairs.getSecondCard()) {
 
-            switch (clickedFirst){
+            switch (twopairs.getClickedFirst()){
                 case 0:
                     imgView_11.setVisibility(View.INVISIBLE);
                     break;
@@ -201,7 +196,7 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
                     break;
             }
 
-            switch (clickedSecond){
+            switch (twopairs.getClickedSecond()){
                 case 0:
                     imgView_11.setVisibility(View.INVISIBLE);
                     break;
@@ -231,7 +226,7 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
                     break;
             }
 
-            points++;
+            twopairs.setPoints();
         } else {
             imgView_11.setImageResource(R.drawable.img_back);
             imgView_12.setImageResource(R.drawable.img_back);
