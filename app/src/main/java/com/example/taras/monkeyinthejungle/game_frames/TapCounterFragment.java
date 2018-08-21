@@ -12,15 +12,25 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taras.monkeyinthejungle.GamePlan;
 import com.example.taras.monkeyinthejungle.Main;
 import com.example.taras.monkeyinthejungle.R;
+import com.example.taras.monkeyinthejungle.game_logic_pkg.GameLogic;
 import com.example.taras.monkeyinthejungle.games.TapCounter;
 
 public class TapCounterFragment extends Fragment implements View.OnClickListener {
     Button btn;
     TextView tx;
-    TapCounter tapCounterObject = new TapCounter();
+    TapCounter tapCounterObject;
+    private GameLogic gameTracker;
+    public TapCounterFragment() {
+    }
 
+
+    public static TapCounterFragment newInstance() {
+        TapCounterFragment fragment = new TapCounterFragment();
+        return fragment;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.tap_counter_fragment, container, false);
@@ -29,7 +39,8 @@ public class TapCounterFragment extends Fragment implements View.OnClickListener
     @Override
     public void onStart() {
         super.onStart();
-
+        gameTracker = GamePlan.getGameLogic();
+        tapCounterObject = (TapCounter)gameTracker.getGame().getGame();
         btn = (Button) getActivity().findViewById(R.id.tapButton);
         tx = (TextView) getActivity().findViewById(R.id.counter);
         btn.setOnClickListener(this);
@@ -43,7 +54,9 @@ public class TapCounterFragment extends Fragment implements View.OnClickListener
 
         if(tapCounterObject.getmCounter() == tapCounterObject.getMaxCount()) {
             btn.setOnClickListener(null);
+            gameTracker.success();
 
+            /*
             System.out.println("difference " + tapCounterObject.getDifference()/1000.0);
 
             Toast toast= Toast.makeText(getContext(),
@@ -57,7 +70,7 @@ public class TapCounterFragment extends Fragment implements View.OnClickListener
                     // Magic here
                     NextIntent();
                 }
-            }, 5000); // Millisecond 1000 = 1 sec
+            }, 5000); // Millisecond 1000 = 1 sec*/
         }
     }
 
