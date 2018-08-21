@@ -59,7 +59,6 @@ public class SinglePlayerActivity extends AppCompatActivity implements Observer 
 
     private void setFrame() {
         GameNode game = logic.getGame();
-        setTimer(game);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =
                 fragmentManager.beginTransaction();
@@ -83,16 +82,20 @@ public class SinglePlayerActivity extends AppCompatActivity implements Observer 
                 Log.e("RTE", "Trying To Create Unknown Game");
                 break;
         }
-
         fragmentTransaction.commit();
+        setTimer(game);
+        logic.startRound();
     }
 
     public void update(Observable obj, Object arg) {
+        if(mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+        }
         if( arg == "game:nextRound") {
             setFrame();
         }
         if ( arg == "game:done") {
-            System.out.println("done");
+            System.out.println("done:" + logic.getTotalPoints());
         }
 
     }
@@ -111,7 +114,6 @@ public class SinglePlayerActivity extends AppCompatActivity implements Observer 
             @Override
             public void onClick(View v) {
                 logic.skip();
-                setFrame();
             }
         });
     }
