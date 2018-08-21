@@ -1,4 +1,4 @@
-package com.example.taras.monkeyinthejungle;
+package com.example.taras.monkeyinthejungle.game_frames;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,13 +12,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TapCounterFragment extends Fragment implements View.OnClickListener {
+import com.example.taras.monkeyinthejungle.Main;
+import com.example.taras.monkeyinthejungle.R;
+import com.example.taras.monkeyinthejungle.games.TapCounter;
 
-    private  int mCointer = 0;
-    private int maxCount = 10;
-    private long startTime, difference;
+public class TapCounterFragment extends Fragment implements View.OnClickListener {
     Button btn;
     TextView tx;
+    TapCounter tapCounterObject = new TapCounter();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,22 +29,22 @@ public class TapCounterFragment extends Fragment implements View.OnClickListener
     @Override
     public void onStart() {
         super.onStart();
+
         btn = (Button) getActivity().findViewById(R.id.tapButton);
         tx = (TextView) getActivity().findViewById(R.id.counter);
         btn.setOnClickListener(this);
-        startTime = System.currentTimeMillis();
+        tapCounterObject.startStartTime();
     }
 
     @Override
     public void onClick(View view) {
-        mCointer++;
-        tx.setText(Integer.toString(mCointer));
+        tapCounterObject.setmCounter();
+        tx.setText(Integer.toString(tapCounterObject.getmCounter()));
 
-        if(mCointer == maxCount) {
+        if(tapCounterObject.getmCounter() == tapCounterObject.getMaxCount()) {
             btn.setOnClickListener(null);
 
-            difference = System.currentTimeMillis() - startTime;
-            System.out.println("difference " + difference/1000.0);
+            System.out.println("difference " + tapCounterObject.getDifference()/1000.0);
 
             Toast toast= Toast.makeText(getContext(),
                     "Saving your score", Toast.LENGTH_LONG);

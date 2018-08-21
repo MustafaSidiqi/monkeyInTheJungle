@@ -8,49 +8,50 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:weightSum="4"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:layout_height="match_parent">
+        android:weightSum="4"
+        android:layout_marginTop="150dp">
 
 
         <ImageView
             android:id="@+id/img_11"
-            android:scaleType="centerInside"
-            android:layout_weight="1"
-            android:src="@drawable/img_back"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_back" />
 
         <ImageView
             android:id="@+id/img_12"
-            android:scaleType="centerInside"
-            android:layout_weight="1"
-            android:src="@drawable/img_back"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_back" />
 
         <ImageView
             android:id="@+id/img_13"
-            android:scaleType="centerInside"
-            android:layout_weight="1"
-            android:src="@drawable/img_back"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_back" />
 
         <ImageView
             android:id="@+id/img_14"
-            android:scaleType="centerInside"
-            android:layout_weight="1"
-            android:src="@drawable/img_back"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_back" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="4"
         android:layout_weight="1">
@@ -59,18 +60,20 @@
         <ImageView
             android:id="@+id/img_21"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:scaleType="centerInside"
-            android:src="@drawable/img_back" />
+            android:src="@drawable/img_back"
+            android:layout_marginBottom="100dp"/>
 
         <ImageView
             android:id="@+id/img_22"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:scaleType="centerInside"
-            android:src="@drawable/img_back" />
+            android:src="@drawable/img_back"
+            android:layout_marginBottom="100dp"/>
 
         <ImageView
             android:id="@+id/img_23"
@@ -78,7 +81,8 @@
             android:layout_weight="1"
             android:src="@drawable/img_back"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"/>
 
         <ImageView
             android:id="@+id/img_24"
@@ -86,7 +90,8 @@
             android:layout_weight="1"
             android:src="@drawable/img_back"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"/>
 
     </LinearLayout>
 
