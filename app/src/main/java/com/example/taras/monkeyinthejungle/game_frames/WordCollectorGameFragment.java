@@ -63,8 +63,10 @@ public class WordCollectorGameFragment extends Fragment {
         LinearLayout mainLayout = v.findViewById(R.id.lnl_collect_word_layout);
         LinearLayout line = setNewLine(activity);
         allButtons = new Button[shuffledWord.length];
+        int nextChange = getNextLineChange(shuffledWord.length);
         for(int i = 0; i< shuffledWord.length; i++) {
-            if( i % 4 == 0) {
+            if( nextChange == 0) {
+                nextChange = getNextLineChange(shuffledWord.length - i);
                 mainLayout.addView(line);
                 line = setNewLine(activity);
             }
@@ -83,12 +85,13 @@ public class WordCollectorGameFragment extends Fragment {
                     activeView.findViewById(v.getId()).setVisibility(View.INVISIBLE);
                     System.out.println(collectedWord);
                     System.out.println(answer);
-                    if(collectedWord.equals(answer)) {
+                    if((collectedWord.toLowerCase()).equals(answer.toLowerCase())) {
                         gameTracker.success();
                     }
                 }
             });
             line.addView(btn);
+            nextChange--;
         }
         mainLayout.addView(line);
     }
@@ -112,5 +115,22 @@ public class WordCollectorGameFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private int getNextLineChange(int lettersLeft){
+        int returnVal = 0;
+        switch(lettersLeft % 5){
+            case 0:
+                returnVal = 5;
+                break;
+            case 1: case 2: case 3:
+                returnVal = 3;
+                break;
+            case 4:
+                returnVal = 3;
+                break;
+        }
+
+        return returnVal;
     }
 }

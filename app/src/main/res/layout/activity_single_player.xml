@@ -15,24 +15,24 @@
         <ProgressBar
             android:id="@+id/prg_single_aktv_progress_bar"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
             android:indeterminate="false"
             android:max="100"
             android:progress="20"
-            android:progressDrawable="@drawable/progress"  />
+            android:progressDrawable="@drawable/progress" />
 
         <Button
             android:id="@+id/btn_single_player_skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
             android:text="@string/str_single_player_skip"
-            app:layout_constraintBottom_toTopOf="@+id/frg_single_game_replace_fragment"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/prg_single_aktv_progress_bar"
+            app:layout_constraintBottom_toBottomOf="@+id/prg_single_aktv_progress_bar"/>
 
         <FrameLayout
             android:id="@+id/frg_single_game_replace_fragment"
@@ -40,10 +40,9 @@
             android:layout_height="0dp"
             android:layout_marginTop="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_single_player_skip">
+            app:layout_constraintTop_toBottomOf="@+id/prg_single_aktv_progress_bar">
 
         </FrameLayout>
     </android.support.constraint.ConstraintLayout>
