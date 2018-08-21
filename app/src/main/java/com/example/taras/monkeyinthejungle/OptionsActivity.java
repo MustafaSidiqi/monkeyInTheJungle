@@ -6,11 +6,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -32,6 +34,13 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
     TextView tvProgressLabel;
     Button btn_save;
 
+    private Switch two_pair_s,
+            tap_counter_s,
+            shake_it_s,
+            word_collector_s,
+            find_the_number_s,
+            random_games_s;
+
     public HashMap<String, Boolean> getGamesToBePlayed() {
         return gamesToBePlayed;
     }
@@ -42,6 +51,28 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
 
     public int getNumberOfRounds() {
         return numberOfRounds;
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        two_pair_s = (Switch) findViewById(R.id.two_pair_boolean);
+        tap_counter_s = (Switch) findViewById(R.id.tap_counter_boolean);
+        shake_it_s = (Switch) findViewById(R.id.shake_it_boolean);
+        find_the_number_s = (Switch) findViewById(R.id.find_the_num_boolean);
+        word_collector_s = (Switch) findViewById(R.id.word_collector_boolean);
+        random_games_s = (Switch) findViewById(R.id.random_boolean);
+
+        loadMap();
+
+        two_pair_s.setChecked(gamesToBePlayed.get("two_pair"));
+        tap_counter_s.setChecked(gamesToBePlayed.get("tap_counter"));
+        shake_it_s.setChecked(gamesToBePlayed.get("shake_it"));
+        find_the_number_s.setChecked(gamesToBePlayed.get("find_the_number"));
+        word_collector_s.setChecked(gamesToBePlayed.get("word_collector"));
+        random_games_s.setChecked(isRandomGames());
+        seekBar.setProgress(getNumberOfRounds());
     }
 
     @Override
@@ -59,14 +90,14 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
 
         numberOfRounds = seekBar.getProgress();
         tvProgressLabel = findViewById(R.id.num_of_games_text);
-        tvProgressLabel.setText("Progress: " + numberOfRounds);
+        tvProgressLabel.setText(numberOfRounds+"");
     }
 
     SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            tvProgressLabel.setText("Progress: " + progress);
+            tvProgressLabel.setText(progress+"");
         }
 
         @Override
@@ -85,12 +116,12 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
         myPrefs = getSharedPreferences("monkey", Context.MODE_PRIVATE);
 
         // initiate a Switch
-        Switch two_pair_s = (Switch) findViewById(R.id.two_pair_boolean);
-        Switch tap_counter_s = (Switch) findViewById(R.id.tap_counter_boolean);
-        Switch shake_it_s = (Switch) findViewById(R.id.shake_it_boolean);
-        Switch find_the_number_s = (Switch) findViewById(R.id.find_the_num_boolean);
-        Switch word_collector_s = (Switch) findViewById(R.id.word_collector_boolean);
-        Switch random_games_s = (Switch) findViewById(R.id.random_boolean);
+        two_pair_s = (Switch) findViewById(R.id.two_pair_boolean);
+        tap_counter_s = (Switch) findViewById(R.id.tap_counter_boolean);
+        shake_it_s = (Switch) findViewById(R.id.shake_it_boolean);
+        find_the_number_s = (Switch) findViewById(R.id.find_the_num_boolean);
+        word_collector_s = (Switch) findViewById(R.id.word_collector_boolean);
+        random_games_s = (Switch) findViewById(R.id.random_boolean);
 
         // check current state of a Switch (true or false).
         Boolean two_pair = two_pair_s.isChecked();
@@ -108,13 +139,18 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
         gamesToBePlayed.put("find_the_number", find_the_number);
         gamesToBePlayed.put("word_collector", word_collector);
 
+        Toast toast= Toast.makeText(this,
+                "Saving your settings", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 100);
+        toast.show();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 saveMap();
                 NextIntent();
             }
-        }, 5000); // Millisecond 1000 = 1 sec
+        }, 3000); // Millisecond 1000 = 1 sec
     }
 
     private void NextIntent() {
