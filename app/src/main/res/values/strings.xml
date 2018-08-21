@@ -4,12 +4,23 @@
     <string name="str_multi_player">Multi Player</string>
     <string name="str_score">Score</string>
     <string name="str_options">Options</string>
+    <string name="str_random">Random</string>
+    <string name="str_number_of_games">Number Of Rounds</string>
+    <string name="str_TwoPair">Two Pair</string>
+    <string name="str_TapCounter">Tap Counter</string>
+    <string name="str_ShakeIt">Shake It</string>
+    <string name="str_FindTheNumber">Find The Number</string>
+    <string name="str_WordCollector">Word Collector</string>
+    <string name="btn_save">Save</string>
+
+
     <string name="title_activity_single_player">SinglePlayerActivity</string>
     <string name="title_activity_multi_player">MultiPlayerActivity</string>
     <string name="str_game_missing_number_header">Solve this equation</string>
     <string name="str_collect_word_header">Collect A Word</string>
     <string name="str_reset">Reset</string>
     <string name="str_shake_game_header">Shake Your Phone </string>
+
 
 
     <!-- test strings -->

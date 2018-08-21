@@ -1,7 +1,6 @@
 package com.example.taras.monkeyinthejungle;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +20,7 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
         intSinglePlayer =  new Intent(this, TwoPairsFragment.class);
         intMultiPlayer =  new Intent(this, MultiPlayerActivity.class);
         intScore =  new Intent(this, ScoreActivity.class);
-        intOptions =  new Intent(this, GameOptionsActivity.class);
+        intOptions =  new Intent(this, OptionsActivity.class);
 
         setUpListeners();
     }
