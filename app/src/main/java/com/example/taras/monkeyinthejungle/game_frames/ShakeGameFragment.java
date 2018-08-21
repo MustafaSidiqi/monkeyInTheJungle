@@ -1,6 +1,8 @@
 package com.example.taras.monkeyinthejungle.game_frames;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,15 +12,21 @@ import android.widget.TextView;
 
 import com.example.taras.monkeyinthejungle.GamePlan;
 import com.example.taras.monkeyinthejungle.R;
+import com.example.taras.monkeyinthejungle.game_logic_pkg.GameLogic;
 import com.example.taras.monkeyinthejungle.games.ShakeGame;
 
 import java.util.Observable;
 import java.util.Observer;
 
-public class ShakeGameFragment extends Fragment implements Observer {
+public class ShakeGameFragment extends Fragment {
         private View activeView;
-        ShakeGame game;
+        private ShakeGame game;
+        private MutableLiveData<Integer> LiveShakeUpdater;
+        private GameLogic gameTracker;
+        private int targetDistance;
+
         public ShakeGameFragment() {
+
         }
 
 
@@ -35,24 +43,22 @@ public class ShakeGameFragment extends Fragment implements Observer {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             activeView = inflater.inflate(R.layout.fragment_shake_game, container, false);
-            game = (ShakeGame)GamePlan.getGameLogic().getGame().getGame();
-            game.addObserver(this);
-            game.setAlertDistance(50);
+            gameTracker = GamePlan.getGameLogic();
+            game = (ShakeGame)gameTracker.getGame().getGame();
             game.startGame(getActivity());
-
+            LiveShakeUpdater = game.getLiveData();
+            targetDistance = game.getDistance();
+            LiveShakeUpdater.observe(this, new android.arch.lifecycle.Observer<Integer>() {
+                @Override
+                public void onChanged(@Nullable Integer resultCount) {
+                    TextView result =  activeView.findViewById(R.id.txt_shake_result);
+                    result.setText(resultCount +"");
+                    if(resultCount.equals(targetDistance)) {
+                        gameTracker.success();
+                    }
+                }
+            });
             return activeView;
         }
 
-        @Override
-        public void onDetach() {
-                game.deleteObserver(this);
-            super.onDetach();
-        }
-
-        public void update(Observable obj, Object arg) {
-                if((String)arg != "round:complete:true" ) {
-                    TextView result = activeView.findViewById(R.id.txt_shake_result);
-                    result.setText((String)arg);
-                }
-        }
     }

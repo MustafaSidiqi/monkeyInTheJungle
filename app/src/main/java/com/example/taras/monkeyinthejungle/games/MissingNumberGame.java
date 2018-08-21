@@ -2,10 +2,9 @@ package com.example.taras.monkeyinthejungle.games;
 
 import android.util.Log;
 
-import java.util.Observable;
 import java.util.Random;
 
-public class MissingNumberGame extends Observable {
+public class MissingNumberGame  {
 
     private static final int MAXNUMBER = 100;
     private static final int MINNUMBER = 10;
@@ -32,12 +31,6 @@ public class MissingNumberGame extends Observable {
 
     public int getAngwerId() { return answerIndex; }
 
-    public void markAsFinished(boolean correct) {
-        String m = correct ? "round:complete:true" : "round:complete:false";
-        setChanged();
-        notifyObservers(m);
-        deleteObservers();
-    }
     private int generateEquation() {
         int hiddenNumber = rand.nextInt(VARIABLES );
         Log.d("MN", hiddenNumber + "");

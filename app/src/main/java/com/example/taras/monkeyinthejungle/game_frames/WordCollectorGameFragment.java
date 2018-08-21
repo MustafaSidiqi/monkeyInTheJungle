@@ -14,6 +14,7 @@ package com.example.taras.monkeyinthejungle.game_frames;
 
         import com.example.taras.monkeyinthejungle.GamePlan;
         import com.example.taras.monkeyinthejungle.R;
+        import com.example.taras.monkeyinthejungle.game_logic_pkg.GameLogic;
         import com.example.taras.monkeyinthejungle.games.WordCollectorGame;
 
 public class WordCollectorGameFragment extends Fragment {
@@ -24,6 +25,7 @@ public class WordCollectorGameFragment extends Fragment {
     private String answer;
     private Button allButtons[];
     private WordCollectorGame game;
+    private GameLogic gameTracker;
 
     public WordCollectorGameFragment() {
     }
@@ -47,6 +49,7 @@ public class WordCollectorGameFragment extends Fragment {
         System.out.println(gameId);
         activeView = inflater.inflate(R.layout.fragment_word_collector_game, container, false);
         game = (WordCollectorGame) GamePlan.getGameLogic().getGame().getGame();
+        gameTracker = GamePlan.getGameLogic();
         setValues(activeView);
         setResetButtonListener(activeView);
         return activeView;
@@ -81,7 +84,7 @@ public class WordCollectorGameFragment extends Fragment {
                     System.out.println(collectedWord);
                     System.out.println(answer);
                     if(collectedWord.equals(answer)) {
-                        game.markAsFinished(true);
+                        gameTracker.success();
                     }
                 }
             });

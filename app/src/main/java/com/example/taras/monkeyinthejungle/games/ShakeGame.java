@@ -1,6 +1,7 @@
 package com.example.taras.monkeyinthejungle.games;
 
 import android.app.Activity;
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
 import android.hardware.Sensor;
@@ -12,14 +13,16 @@ import android.hardware.SensorManager;
 import java.util.Observable;
 
 
-public class ShakeGame extends Observable {
+public class ShakeGame  {
     private SensorManager sensorManager;
     private float shake;
     private int alertDistance;
+    MutableLiveData<Integer> liveShakeUpdater;
 
 
 
     public ShakeGame() {
+        liveShakeUpdater = new MutableLiveData<>();
     }
 
     public void startGame(Activity act) {
@@ -33,6 +36,14 @@ public class ShakeGame extends Observable {
 
     }
 
+    public int getDistance() {
+     return alertDistance;
+    }
+
+    public MutableLiveData<Integer> getLiveData() {
+        return liveShakeUpdater;
+    }
+
     private final SensorEventListener sensorListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent sensorEvent) {
@@ -43,12 +54,7 @@ public class ShakeGame extends Observable {
             float distance = (float) Math.sqrt(x*x+y*y+z*z) * 0.004f;
             if(distance > 0.05) {
                 shake += distance;
-            }
-            if (shake >= alertDistance ) {
-                markAsFinished();
-            }else{
-                setChanged();
-                notifyObservers("" + shake);
+                liveShakeUpdater.setValue((int)shake);
             }
         }
 
@@ -57,11 +63,4 @@ public class ShakeGame extends Observable {
 
         }
     };
-
-    private void markAsFinished() {
-        setChanged();
-        notifyObservers("round:complete:true");
-        deleteObservers();
-    }
-
 }

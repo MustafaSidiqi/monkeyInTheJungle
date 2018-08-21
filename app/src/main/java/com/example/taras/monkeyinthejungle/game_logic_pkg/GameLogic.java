@@ -2,12 +2,16 @@ package com.example.taras.monkeyinthejungle.game_logic_pkg;
 import java.util.Observable;
 
 public class GameLogic extends Observable {
+    public final int SKIP = 0;
+    public final int SUCCESS = 1;
+    public final int FAIL = 2;
+
     private GameNode games[];
     private int stateIndex;
 
     public GameLogic() {
         GameListGenerator generator = new GameListGenerator();
-        games = generator.getGameList(this);
+        games = generator.getGameList();
         stateIndex = 0;
     }
 
@@ -16,14 +20,14 @@ public class GameLogic extends Observable {
     }
 
     public void skip(){
-        nextRound();
+        nextRound(SKIP);
     }
 
-    public void update(String s) {
-        nextRound();
-    }
+    public void success() { nextRound(SUCCESS);}
 
-    private void nextRound() {
+    public void fail() { nextRound(FAIL);}
+
+    private void nextRound(int status  ) {
         stateIndex++;
         setChanged();
         if(stateIndex < games.length ) {

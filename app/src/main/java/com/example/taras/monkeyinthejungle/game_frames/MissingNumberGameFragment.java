@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 import com.example.taras.monkeyinthejungle.GamePlan;
 import com.example.taras.monkeyinthejungle.R;
+import com.example.taras.monkeyinthejungle.game_logic_pkg.GameLogic;
 import com.example.taras.monkeyinthejungle.games.MissingNumberGame;
 
 public class MissingNumberGameFragment extends Fragment {
     private View activeView;
     private MissingNumberGame game;
+    private GameLogic gameTracker;
     private int answerButton;
     public MissingNumberGameFragment() {
     }
@@ -36,7 +38,7 @@ public class MissingNumberGameFragment extends Fragment {
         activeView = inflater.inflate(R.layout.fragment_missing_number_game, container, false);
         game = (MissingNumberGame)GamePlan.getGameLogic().getGame().getGame();
         setValues(activeView);
-
+        gameTracker = GamePlan.getGameLogic();
         return activeView;
     }
 
@@ -58,10 +60,10 @@ public class MissingNumberGameFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if ( v.getId() == answerButton ) {
-                        game.markAsFinished(true);
+                        gameTracker.success();
                     }
                     else{
-                        game.markAsFinished(false);
+                        gameTracker.fail();
                     }
                 }
             })
