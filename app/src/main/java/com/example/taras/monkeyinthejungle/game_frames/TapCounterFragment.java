@@ -23,6 +23,7 @@ public class TapCounterFragment extends Fragment implements View.OnClickListener
     TextView tx;
     TapCounter tapCounterObject;
     private GameLogic gameTracker;
+
     public TapCounterFragment() {
     }
 

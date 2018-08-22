@@ -1,5 +1,7 @@
 package com.example.taras.monkeyinthejungle.games;
 
+import java.util.Random;
+
 public class TapCounter {
     private  int mCounter = 0;
     private int maxCount = 10;
@@ -25,8 +27,8 @@ public class TapCounter {
         return maxCount;
     }
 
-    public void setMaxCount(int maxCount) {
-        this.maxCount = maxCount;
+    public void randomMaxCount() {
+        Random rand = new Random();
+        this.maxCount = rand.nextInt(50) + 1;;
     }
-
 }
