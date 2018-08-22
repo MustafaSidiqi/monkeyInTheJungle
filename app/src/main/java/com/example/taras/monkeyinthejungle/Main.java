@@ -47,7 +47,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                 //GamePlan.getGameLogic();
                 //startActivity(intSinglePlayer);
                 FirebaseServices fb = new FirebaseServices();
-                fb.helloFirebase();
+                //fb.helloFirebase();
+                fb.loadData();
                 break;
             case R.id.btn_multi_player:
                 startActivity(intMultiPlayer);
