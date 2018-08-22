@@ -1,6 +1,9 @@
 package com.example.taras.monkeyinthejungle.game_logic_pkg;
 import android.os.CountDownTimer;
 
+import com.example.taras.monkeyinthejungle.GameObject;
+
+import java.util.List;
 import java.util.Observable;
 
 
@@ -18,10 +21,13 @@ public class GameLogic extends Observable {
     private CountDownTimer timer;
     private long timeStart;
     private int pointArray[][];
+    public boolean IsGameOwner;
+    public boolean IsMultiplayer;
 
     public GameLogic() {
         generator = new GameListGenerator();
         newGameList();
+
     }
 
     public GameNode getGame() {
@@ -51,9 +57,19 @@ public class GameLogic extends Observable {
     }
 
     public void newGame() {
+        IsGameOwner = false;
+        IsMultiplayer = false;
         newGameList();
         setChanged();
         notifyObservers("game:newGame");
+    }
+
+    public GameObject getLobyGames() {
+        GameObject[] g = new GameObject[games.length];
+        for(int i = 0; i < games.length; i++) {
+            g[i] = new GameObject(/*games[i].getResult()*/0, games[i].getRoundTime(), games[i].getType(), games[i].getList());
+        }
+        return g[0];
     }
 
     private void newGameList() {
@@ -68,6 +84,7 @@ public class GameLogic extends Observable {
         setChanged();
         if(stateIndex < games.length ) {
             notifyObservers("game:nextRound");
+            stateIndex--;
             return;
         }
         notifyObservers("game:done");

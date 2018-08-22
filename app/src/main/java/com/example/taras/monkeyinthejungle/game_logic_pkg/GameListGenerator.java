@@ -8,8 +8,11 @@ import com.example.taras.monkeyinthejungle.games.TapCounter;
 import com.example.taras.monkeyinthejungle.games.TwoPairs;
 import com.example.taras.monkeyinthejungle.games.WordCollectorGame;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class GameListGenerator {
@@ -27,27 +30,41 @@ public class GameListGenerator {
     
     public GameNode[] getGameList(){
         games = new GameNode[roundsCount];
+
         for( int i = 0; i < roundsCount; i++ ) {
+            List<Object> list;
             switch(allowedGames.get(random.nextInt(allowedGames.size()))) {
                 case "two_pair":
-                    games[i] = new GameNode("two_pair", new TwoPairs(),random.nextInt(25) + 50);
+                    TwoPairs tp = new TwoPairs();
+                    list = Arrays.asList((Object)tp.getCardArray());
+                    games[i] = new GameNode("two_pair", new TwoPairs(),random.nextInt(25) + 50, "", list);
                     break;
                 case "tap_counter":
-                    games[i] = new GameNode("tap_counter", new TapCounter(),random.nextInt(5)+ 5);
+                    TapCounter tc = new TapCounter();
+                    list = new ArrayList<>();
+                    games[i] = new GameNode("tap_counter",tc ,random.nextInt(5)+ 5,tc.getMaxCount()+"", list );
                     break;
                 case "shake_it":
                     ShakeGame g = new ShakeGame();
                     g.setAlertDistance(random.nextInt(75) + 25);
-                    games[i] = new GameNode("shake_it", g, random.nextInt( 20 ) + 10);
+                    games[i] = new GameNode("shake_it", g, random.nextInt( 20 ) + 10, g.getDistance() +"", new ArrayList<Object>());
                     break;
                 case "find_the_number":
-                    games[i] = new GameNode("find_the_number", new MissingNumberGame(), random.nextInt(5)+ 5);
+                    MissingNumberGame mn = new MissingNumberGame();
+                    int[] opt = mn.getOptions();
+                    String answer = opt[mn.getAngwerId()] + "";
+                    list = new ArrayList<>();
+                    for(int j = 0; j < opt.length; j++) { list.add(opt[i]);}
+                    games[i] = new GameNode("find_the_number", mn , random.nextInt(5)+ 5, answer, list);
                     break;
                 case "word_collector":
                     WordCollectorGame w = new WordCollectorGame();
                     int wordlength = w.getWord().length();
                     wordlength =(int)Math.pow(wordlength, 1.5);
-                    games[i] = new GameNode("word_collector", new WordCollectorGame(), random.nextInt(wordlength) + 10);
+                    char[] c = w.getShuffledWord();
+                    list = new ArrayList<>();
+                    for(int j = 0; j < c.length; j++) { list.add(c[i] +"");}
+                    games[i] = new GameNode("word_collector", w, random.nextInt(wordlength) + 10, w.getWord(), list);
                     break;
                 default:
                     Log.e("RTE", "Trying To Create Unknown Game");

@@ -57,11 +57,19 @@ public class MultiPlayerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String text = getText();
                 if(text == "" ) { return;}
+                text = text.trim();
+                GamePlan.getGameLogic().newGame();
+                GamePlan.getGameLogic().IsGameOwner = true;
+                GamePlan.getGameLogic().IsMultiplayer = true;
+                HashMap<String, Object> scoreMap = new HashMap<>();
+                scoreMap.put("TEST", 0);
+                fb.addLobby(text, "TEST", false, scoreMap, GamePlan.getGameLogic().getLobyGames() );
             }
         });
         search.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
                 String text = getText();
+                text = (text.trim()).toLowerCase();
                 if(text == "" ) {
                     values = defValues;
                     lobbyIds = defLobbyIds;
@@ -98,7 +106,7 @@ public class MultiPlayerActivity extends AppCompatActivity {
     }
 
     private String getText() {
-     return (input.getText().toString()).trim().toLowerCase();
+     return (input.getText()).toString();
     }
 
 
