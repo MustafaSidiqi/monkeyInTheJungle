@@ -7,7 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.taras.monkeyinthejungle.game_frames.TwoPairsFragment;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main extends AppCompatActivity implements View.OnClickListener {
     Intent intSinglePlayer;
@@ -46,9 +47,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             case R.id.btn_single_player:
                 //GamePlan.getGameLogic();
                 //startActivity(intSinglePlayer);
+                Map<String, Object> score = new HashMap<>();
+                score.put("Unknown", 10);
                 FirebaseServices fb = new FirebaseServices();
-                //fb.helloFirebase();
-                fb.loadData();
+                fb.changeGameStart(false, "6xvFIeEAiEPK17xFptsD");
                 break;
             case R.id.btn_multi_player:
                 startActivity(intMultiPlayer);

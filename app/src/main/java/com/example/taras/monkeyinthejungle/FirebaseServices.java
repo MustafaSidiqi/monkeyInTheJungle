@@ -20,18 +20,12 @@ public class FirebaseServices {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private int score;
+    private String collectionPath = "Multi";
 
-    public void helloFirebase() {// Create a new user with a first and last name
-
-        Map<String, Object> score = new HashMap<>();
-        score.put("Mustafa", 4);
-        List<Integer> list = new ArrayList<Integer>();
-        list.add(3);
-        list.add(4);
-        Lobby lobby = new Lobby("Taras", "John Wich", true, score, new GameObject(1,2,"Tap", list));
-
+    public void addLobby(String ln, String lo, Boolean gs, Map<String, Object> s, GameObject go) {
+        Lobby lobby = new Lobby(ln, lo, gs, s, go);
         // Add a new document with a generated ID
-        db.collection("Multi").document().set(lobby)
+        db.collection(collectionPath).document().set(lobby)
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
@@ -40,30 +34,15 @@ public class FirebaseServices {
                 });
     }
 
-    public void loadData () {
-        final DocumentReference document =  db.collection("Multi").document("MpVxCM1uiAy9Dl4MM13q");
-
-        Map<String, Object> score = new HashMap<>();
-
-        score.put("V1", 100);
-        score.put("Termin", 40);
-        score.put("TerminV2", 4000);
-
-
-
-
+    public void addUserScore(final String name, final int score, String lobbyId) {
+        final DocumentReference document =  db.collection(collectionPath).document(lobbyId);
         document.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
                     Lobby l = documentSnapshot.toObject(Lobby.class);
-                    l.addUserScore("Mustafa", 1123);
-                    l.addUserScore("terminator", 8888);
-
-
+                    l.addUserScore(name, score);
                     document.set(l);
-
-
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -74,25 +53,41 @@ public class FirebaseServices {
         });
     }
 
-    public void setScore() {
-        DocumentReference document =  db.collection("Multi").document("MpVxCM1uiAy9Dl4MM13q");
-
+    public void changeGameStart(final boolean val, String lobbyId) {
+        final DocumentReference document =  db.collection(collectionPath).document(lobbyId);
         document.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Lobby lobby = documentSnapshot.toObject(Lobby.class);
+                if (documentSnapshot.exists()) {
+                    Lobby l = documentSnapshot.toObject(Lobby.class);
+                    l.setStart(val);
+                    document.set(l);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
             }
         });
+    }
 
+    public Lobby getLobbyObject(String lobbyId) {
+        final DocumentReference document =  db.collection(collectionPath).document(lobbyId);
+        Lobby l = null;
+        document.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    Lobby l = documentSnapshot.toObject(Lobby.class);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
 
-
-        Map<String, Integer> score = new HashMap<>();
-
-        score.put("MustafaV2", 100);
-        score.put("Termin", 40);
-        score.put("TerminV2", 4000);
-        db.collection("Multi").document("z07EN9vVldFoZfiOidWZ").update(
-                "score", score
-        );
+            }
+        });
+        return l;
     }
 }
