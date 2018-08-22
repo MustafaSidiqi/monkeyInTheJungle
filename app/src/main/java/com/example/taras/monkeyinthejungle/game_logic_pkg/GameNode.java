@@ -1,4 +1,5 @@
 package com.example.taras.monkeyinthejungle.game_logic_pkg;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameNode {
@@ -9,10 +10,10 @@ public class GameNode {
     private String gameType;
     private int roundTime;
     private Object game;
-    private List<Object> list;
+    private ArrayList<Object> list;
     private String result;
 
-    public GameNode(String s, Object g, int time, String result, List<Object> options){
+    public GameNode(String s, Object g, int time, String result, ArrayList<Object> options){
         gameType = s;
         game = g;
         roundTime = time;
@@ -29,7 +30,7 @@ public class GameNode {
     }
 
     public int getRoundTime(){ return roundTime; }
-    public List<Object> getList() { return list; }
+    public ArrayList<Object> getList() { return list; }
     public String getResult() { return result; }
 
 }

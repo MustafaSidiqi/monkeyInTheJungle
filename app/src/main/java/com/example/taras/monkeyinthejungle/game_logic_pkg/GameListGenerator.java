@@ -34,11 +34,13 @@ public class GameListGenerator {
         games = new GameNode[roundsCount];
 
         for( int i = 0; i < roundsCount; i++ ) {
-            List<Object> list;
+            ArrayList<Object> list;
             switch(allowedGames.get(random.nextInt(allowedGames.size()))) {
                 case "two_pair":
                     TwoPairs tp = new TwoPairs();
-                    list = Arrays.asList((Object)tp.getCardArray());
+                    Integer[] integ = tp.getCardArray();
+                    list = new ArrayList<>();
+                    for(int j = 0; j < integ.length; j++) { list.add(integ[j]);}
                     games[i] = new GameNode("two_pair", new TwoPairs(),random.nextInt(25) + 50, "", list);
                     break;
                 case "tap_counter":
