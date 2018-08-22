@@ -15,7 +15,7 @@
     <string name="btn_save">Save</string>
     <string name="str_your_score">You lucky monkey!! you have finished this game</string>
     <string name="str_multiplayer_game_loby_setup">Multiplayer Lobby</string>
-    <string name="str_search_loby">Search_Lobby</string>
+    <string name="str_search_loby">Search Lobby</string>
     <string name="str_create_loby">Create New Lobby</string>
     <string name="str_lobby_name">Lobby Name</string>
 
