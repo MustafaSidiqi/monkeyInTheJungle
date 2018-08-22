@@ -1,4 +1,4 @@
-package com.example.taras.monkeyinthejungle.games;
+package com.example.taras.monkeyinthejungle;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ public class GameObject {
     int result;
     int roundTime;
     String type;
-    List list;
+    List<Object> list;
 
     public GameObject(int result, int roundTime, String type, List list) {
         this.result = result;

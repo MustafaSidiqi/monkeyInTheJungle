@@ -1,7 +1,5 @@
 package com.example.taras.monkeyinthejungle;
 
-import com.example.taras.monkeyinthejungle.games.GameObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +54,7 @@ public class Lobby {
         this.score = score;
     }
 
-    public void setUserScore(String user, int points) {
+    public void addUserScore(String user, int points) {
         this.score.put(user, points);
     }
 }

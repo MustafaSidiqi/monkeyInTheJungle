@@ -3,14 +3,11 @@ package com.example.taras.monkeyinthejungle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.taras.monkeyinthejungle.games.GameObject;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,12 +57,11 @@ public class FirebaseServices {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
                     Lobby l = documentSnapshot.toObject(Lobby.class);
-                    Map<String, Object> score = l.getScore();
-                    score.put("Mustafa", 99);
+                    l.addUserScore("Mustafa", 1123);
+                    l.addUserScore("terminator", 8888);
 
-                    document.update(
-                            "score", score
-                    );
+
+                    document.set(l);
 
 
                 }
