@@ -15,6 +15,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.taras.monkeyinthejungle.game_logic_pkg.Options;
+
 import org.json.JSONObject;
 
 import java.util.Arrays;
@@ -24,13 +26,6 @@ import java.util.Map;
 
 
 public class OptionsActivity extends AppCompatActivity implements View.OnClickListener {
-
-    SharedPreferences myPrefs;
-
-    private HashMap<String, Boolean> gamesToBePlayed = new HashMap<String, Boolean>();
-    private boolean randomGames;
-    private int numberOfRounds = 1;
-    private String username;
     private SeekBar seekBar;
 
     TextView tvProgressLabel;
@@ -44,17 +39,8 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
             random_games_s;
 
     private EditText userTv;
-    public HashMap<String, Boolean> getGamesToBePlayed() {
-        return gamesToBePlayed;
-    }
+    Options options = new Options(this);
 
-    public boolean isRandomGames() {
-        return randomGames;
-    }
-
-    public int getNumberOfRounds() {
-        return numberOfRounds;
-    }
 
     @Override
     protected void onStart()
@@ -68,16 +54,16 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
         random_games_s = (Switch) findViewById(R.id.random_boolean);
         userTv = (EditText)findViewById(R.id.username_input);
 
-        loadMap();
+        options.loadMap(this);
 
-        two_pair_s.setChecked(gamesToBePlayed.get("two_pair"));
-        tap_counter_s.setChecked(gamesToBePlayed.get("tap_counter"));
-        shake_it_s.setChecked(gamesToBePlayed.get("shake_it"));
-        find_the_number_s.setChecked(gamesToBePlayed.get("find_the_number"));
-        word_collector_s.setChecked(gamesToBePlayed.get("word_collector"));
-        random_games_s.setChecked(isRandomGames());
-        seekBar.setProgress(getNumberOfRounds());
-        userTv.setText(username);
+        two_pair_s.setChecked(options.getGamesToBePlayed().get("two_pair"));
+        tap_counter_s.setChecked(options.getGamesToBePlayed().get("tap_counter"));
+        shake_it_s.setChecked(options.getGamesToBePlayed().get("shake_it"));
+        find_the_number_s.setChecked(options.getGamesToBePlayed().get("find_the_number"));
+        word_collector_s.setChecked(options.getGamesToBePlayed().get("word_collector"));
+        random_games_s.setChecked(options.isRandomGames());
+        seekBar.setProgress(options.getNumberOfRounds());
+        userTv.setText(options.getUsername());
     }
 
     @Override
@@ -93,9 +79,9 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
         Button btn_save  = findViewById(R.id.btn_save_options);
         btn_save.setOnClickListener(this);
 
-        numberOfRounds = seekBar.getProgress();
+        options.setNumberOfRounds(seekBar.getProgress());
         tvProgressLabel = findViewById(R.id.num_of_games_text);
-        tvProgressLabel.setText(numberOfRounds+"");
+        tvProgressLabel.setText(options.getNumberOfRounds()+"");
     }
 
     SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
@@ -118,8 +104,6 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        myPrefs = getSharedPreferences("monkey", Context.MODE_PRIVATE);
-
         // check current state of a Switch (true or false).
         Boolean two_pair = two_pair_s.isChecked();
         Boolean tap_counter = tap_counter_s.isChecked();
@@ -127,25 +111,25 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
         Boolean find_the_number = find_the_number_s.isChecked();
         Boolean word_collector = word_collector_s.isChecked();
 
-        randomGames = random_games_s.isChecked();
-        numberOfRounds = seekBar.getProgress();
-        username = userTv.getText().toString();
+        options.setRandomGames(random_games_s.isChecked());
+        options.setNumberOfRounds(seekBar.getProgress());
+        options.setUsername(userTv.getText().toString());
 
-        gamesToBePlayed.put("two_pair", two_pair);
-        gamesToBePlayed.put("tap_counter", tap_counter);
-        gamesToBePlayed.put("shake_it", shake_it);
-        gamesToBePlayed.put("find_the_number", find_the_number);
-        gamesToBePlayed.put("word_collector", word_collector);
+        options.putInGamesToBePlayed("two_pair", two_pair);
+        options.putInGamesToBePlayed("tap_counter", tap_counter);
+        options.putInGamesToBePlayed("shake_it", shake_it);
+        options.putInGamesToBePlayed("find_the_number", find_the_number);
+        options.putInGamesToBePlayed("word_collector", word_collector);
 
         Toast toast= Toast.makeText(this,
                 "Saving your settings", Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL, 0, 100);
         toast.show();
 
+        options.saveMap(this);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                saveMap();
                 NextIntent();
             }
         }, 3000); // Millisecond 1000 = 1 sec
@@ -154,55 +138,5 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
     private void NextIntent() {
         Intent myIntent = new Intent(this, Main.class);
         this.startActivity(myIntent);
-    }
-
-    private void saveMap(){
-        Map<String,Boolean> inputMap = getGamesToBePlayed();
-        boolean rand = isRandomGames();
-        int numOfRound = getNumberOfRounds();
-
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyVariables", Context.MODE_PRIVATE);
-
-        if (pref != null){
-            JSONObject jsonObject = new JSONObject(inputMap);
-            String jsonString = jsonObject.toString();
-            SharedPreferences.Editor editor = pref.edit();
-
-            editor.remove("My_map").commit();
-            editor.putString("My_map", jsonString);
-            editor.putInt("numberOfRounds", numOfRound);
-            editor.putBoolean("randomBool", rand);
-            editor.putString("username", username);
-            editor.commit();
-        }
-    }
-
-    private void loadMap(){
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyVariables", Context.MODE_PRIVATE);
-        gamesToBePlayed.clear();
-
-        try{
-            if (pref != null){
-                String jsonString = pref.getString("My_map", (new JSONObject()).toString());
-                JSONObject jsonObject = new JSONObject(jsonString);
-                Iterator<String> keysItr = jsonObject.keys();
-
-                while(keysItr.hasNext()) {
-                    String key = keysItr.next();
-                    Boolean value = (Boolean) jsonObject.get(key);
-                    gamesToBePlayed.put(key, value);
-                }
-
-                 randomGames = pref.getBoolean("randomBool", false);
-                 numberOfRounds = pref.getInt("numberOfRounds", 1);
-                 username = pref.getString("username", "");
-            }
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
-        System.out.println("randomGames" + randomGames);
-        System.out.println("numberOfRounds" + numberOfRounds);
-        System.out.println(Arrays.asList(gamesToBePlayed)); // method 1
     }
 }
