@@ -17,13 +17,13 @@ import java.util.Map;
 public class Options {
 
     private HashMap<String, Boolean> gamesToBePlayed = new HashMap<String, Boolean>();
-    private boolean randomGames;
+    private Boolean randomGames;
     private int numberOfRounds = 1;
     private String username;
 
 
 
-    public Options(HashMap<String, Boolean> gamesToBePlayed, boolean randomGames, int numberOfRounds, String username) {
+    public Options(HashMap<String, Boolean> gamesToBePlayed, Boolean randomGames, int numberOfRounds, String username) {
         this.gamesToBePlayed = gamesToBePlayed;
         this.randomGames = randomGames;
         this.numberOfRounds = numberOfRounds;
@@ -32,7 +32,6 @@ public class Options {
 
 
     public Options() {
-
     }
 
     public HashMap<String, Boolean> getGamesToBePlayed() {
@@ -43,7 +42,7 @@ public class Options {
         this.gamesToBePlayed = gamesToBePlayed;
     }
 
-    public void putInGamesToBePlayed(String name, boolean val) {
+    public void putInGamesToBePlayed(String name, Boolean val) {
         this.gamesToBePlayed.put(name, val);
     }
 
@@ -51,11 +50,11 @@ public class Options {
         this.gamesToBePlayed.clear();
     }
 
-    public boolean isRandomGames() {
+    public Boolean isRandomGames() {
         return randomGames;
     }
 
-    public void setRandomGames(boolean randomGames) {
+    public void setRandomGames(Boolean randomGames) {
         this.randomGames = randomGames;
     }
 
@@ -79,6 +78,7 @@ public class Options {
         SharedPreferences pref = that.getApplicationContext().getSharedPreferences("MyVariables", Context.MODE_PRIVATE);
         this.clearGamesToBePlayed();
 
+
         try{
             if (pref != null){
                 String jsonString = pref.getString("My_map", (new JSONObject()).toString());
@@ -94,19 +94,17 @@ public class Options {
                 this.setRandomGames(pref.getBoolean("randomBool", false));
                 this.setNumberOfRounds(pref.getInt("numberOfRounds", 1));
                 this.setUsername(pref.getString("username", ""));
+                System.out.println("NOT HERE");
             }
         } catch(Exception e){
+            System.out.println("HERE");
             e.printStackTrace();
         }
-
-        System.out.println("randomGames" + this.isRandomGames());
-        System.out.println("numberOfRounds" + this.getNumberOfRounds());
-        System.out.println(Arrays.asList(this.getGamesToBePlayed())); // method 1
     }
 
     public void saveMap(Context that){
         Map<String,Boolean> inputMap = this.getGamesToBePlayed();
-        boolean rand = this.isRandomGames();
+        Boolean rand = this.isRandomGames();
         int numOfRound = this.getNumberOfRounds();
         String username = this.getUsername();
 
@@ -120,7 +118,7 @@ public class Options {
             editor.remove("My_map").commit();
             editor.putString("My_map", jsonString);
             editor.putInt("numberOfRounds", numOfRound);
-            editor.putBoolean("randomBool", rand);
+            //editor.putBoolean("randomBool", rand);
             editor.putString("username", username);
             editor.commit();
         }

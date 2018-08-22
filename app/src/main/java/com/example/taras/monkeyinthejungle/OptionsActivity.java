@@ -39,13 +39,18 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
             random_games_s;
 
     private EditText userTv;
-    Options options = new Options();
+    private HashMap<String, Boolean> gamesToBePlayed = new HashMap<String, Boolean>();
+    private Boolean randomGames;
+    private int numberOfRounds = 1;
+    private String username;
 
+    Options options = new Options(gamesToBePlayed, randomGames,numberOfRounds, username);
 
     @Override
     protected void onStart()
     {
         super.onStart();
+
         two_pair_s = (Switch) findViewById(R.id.two_pair_boolean);
         tap_counter_s = (Switch) findViewById(R.id.tap_counter_boolean);
         shake_it_s = (Switch) findViewById(R.id.shake_it_boolean);
@@ -56,14 +61,16 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
 
         options.loadMap(this);
 
-        two_pair_s.setChecked(options.getGamesToBePlayed().get("two_pair"));
-        tap_counter_s.setChecked(options.getGamesToBePlayed().get("tap_counter"));
-        shake_it_s.setChecked(options.getGamesToBePlayed().get("shake_it"));
-        find_the_number_s.setChecked(options.getGamesToBePlayed().get("find_the_number"));
-        word_collector_s.setChecked(options.getGamesToBePlayed().get("word_collector"));
-        random_games_s.setChecked(options.isRandomGames());
-        seekBar.setProgress(options.getNumberOfRounds());
-        userTv.setText(options.getUsername());
+        if(!options.getGamesToBePlayed().isEmpty()) {
+            two_pair_s.setChecked(options.getGamesToBePlayed().get("two_pair"));
+            tap_counter_s.setChecked(options.getGamesToBePlayed().get("tap_counter"));
+            shake_it_s.setChecked(options.getGamesToBePlayed().get("shake_it"));
+            find_the_number_s.setChecked(options.getGamesToBePlayed().get("find_the_number"));
+            word_collector_s.setChecked(options.getGamesToBePlayed().get("word_collector"));
+            random_games_s.setChecked(options.isRandomGames());
+            seekBar.setProgress(options.getNumberOfRounds());
+            userTv.setText(options.getUsername());
+        }
     }
 
     @Override
