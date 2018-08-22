@@ -44,8 +44,10 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.btn_single_player:
-                GamePlan.getGameLogic();
-                startActivity(intSinglePlayer);
+                //GamePlan.getGameLogic();
+                //startActivity(intSinglePlayer);
+                FirebaseServices fb = new FirebaseServices();
+                fb.helloFirebase();
                 break;
             case R.id.btn_multi_player:
                 startActivity(intMultiPlayer);
