@@ -1,14 +1,15 @@
 package com.example.taras.monkeyinthejungle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameObject {
     int result;
     int roundTime;
     String type;
-    List<Object> list;
+    ArrayList<Object> list;
 
-    public GameObject(int result, int roundTime, String type, List list) {
+    public GameObject(int result, int roundTime, String type, ArrayList list) {
         this.result = result;
         this.roundTime = roundTime;
         this.type = type;
