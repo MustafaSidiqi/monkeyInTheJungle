@@ -54,7 +54,7 @@ public class GameListGenerator {
                     int[] opt = mn.getOptions();
                     String answer = opt[mn.getAngwerId()] + "";
                     list = new ArrayList<>();
-                    for(int j = 0; j < opt.length; j++) { list.add(opt[i]);}
+                    for(int j = 0; j < opt.length; j++) { list.add(opt[j]);}
                     games[i] = new GameNode("find_the_number", mn , random.nextInt(5)+ 5, answer, list);
                     break;
                 case "word_collector":
@@ -63,7 +63,7 @@ public class GameListGenerator {
                     wordlength =(int)Math.pow(wordlength, 1.5);
                     char[] c = w.getShuffledWord();
                     list = new ArrayList<>();
-                    for(int j = 0; j < c.length; j++) { list.add(c[i] +"");}
+                    for(int j = 0; j < c.length; j++) { list.add(c[j] +"");}
                     games[i] = new GameNode("word_collector", w, random.nextInt(wordlength) + 10, w.getWord(), list);
                     break;
                 default:
