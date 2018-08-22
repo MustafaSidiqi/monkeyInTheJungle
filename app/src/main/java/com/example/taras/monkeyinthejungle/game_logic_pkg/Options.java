@@ -93,10 +93,8 @@ public class Options {
                 this.setRandomGames(pref.getBoolean("randomBool", false));
                 this.setNumberOfRounds(pref.getInt("numberOfRounds", 1));
                 this.setUsername(pref.getString("username", ""));
-                System.out.println("NOT HERE");
             }
         } catch(Exception e){
-            System.out.println("HERE");
             e.printStackTrace();
         }
     }
