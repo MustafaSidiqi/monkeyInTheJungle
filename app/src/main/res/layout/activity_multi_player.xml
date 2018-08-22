@@ -16,7 +16,7 @@
             android:id="@+id/txt_multiplayer_loby_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:text="@string/str_multiplayer_game_loby_setup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,14 +57,14 @@
             app:layout_constraintStart_toEndOf="@+id/btn_create_lobby"
             app:layout_constraintTop_toBottomOf="@+id/edt_lobby_name_field" />
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/lobby_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_search_lobby"></LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/btn_search_lobby" />
 
     </android.support.constraint.ConstraintLayout>
 
