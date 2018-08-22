@@ -16,10 +16,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     Intent intOptions;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        GamePlan.deleteGame();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        intSinglePlayer =  new Intent(this, TwoPairsFragment.class);
+        intSinglePlayer =  new Intent(this, SinglePlayerActivity.class);
         intMultiPlayer =  new Intent(this, MultiPlayerActivity.class);
         intScore =  new Intent(this, ScoreActivity.class);
         intOptions =  new Intent(this, OptionsActivity.class);
@@ -43,14 +44,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.btn_single_player:
-                Intent intent = new Intent(getBaseContext(), FragmentLayout.class);
-                intent.putExtra("FragmentName", "TwoPairs");
-                startActivity(intent);
+                GamePlan.getGameLogic();
+                startActivity(intSinglePlayer);
                 break;
             case R.id.btn_multi_player:
-                intent = new Intent(getBaseContext(), FragmentLayout.class);
-                intent.putExtra("FragmentName", "TapCounter");
-                startActivity(intent);
+                startActivity(intMultiPlayer);
                 break;
             case R.id.btn_score:
                 startActivity(intScore);

@@ -8,44 +8,41 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.taras.monkeyinthejungle.GamePlan;
 import com.example.taras.monkeyinthejungle.R;
+import com.example.taras.monkeyinthejungle.game_logic_pkg.GameLogic;
 import com.example.taras.monkeyinthejungle.games.MissingNumberGame;
 
 public class MissingNumberGameFragment extends Fragment {
-    private static final String ARG_PARAM1 = "gameId";
-    private int gameId;
     private View activeView;
+    private MissingNumberGame game;
+    private GameLogic gameTracker;
     private int answerButton;
     public MissingNumberGameFragment() {
     }
 
 
-    public static MissingNumberGameFragment newInstance(int gameId) {
+    public static MissingNumberGameFragment newInstance() {
         MissingNumberGameFragment fragment = new MissingNumberGameFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, gameId);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            gameId = savedInstanceState.getInt(ARG_PARAM1);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        System.out.println(gameId);
         activeView = inflater.inflate(R.layout.fragment_missing_number_game, container, false);
-        MissingNumberGame game = new MissingNumberGame();
-        setValues(activeView, game);
-
+        game = (MissingNumberGame)GamePlan.getGameLogic().getGame().getGame();
+        setValues(activeView);
+        gameTracker = GamePlan.getGameLogic();
         return activeView;
     }
 
-    private void setValues(View view, MissingNumberGame game){
+    private void setValues(View view){
         TextView txtEquation = (TextView)view.findViewById(R.id.txt_missing_number_equation);
         txtEquation.setText(game.getEquation());
         int optionsIds[] = {
@@ -62,10 +59,12 @@ public class MissingNumberGameFragment extends Fragment {
             btnOption.setOnClickListener((new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TextView txtEquation = (TextView)activeView.findViewById(R.id.txt_missing_number_equation);
-                    String text =  v.getId() == answerButton ? "correct" : "false";
-                    txtEquation.setText(text);
-
+                    if ( v.getId() == answerButton ) {
+                        gameTracker.success();
+                    }
+                    else{
+                        gameTracker.fail();
+                    }
                 }
             })
             );

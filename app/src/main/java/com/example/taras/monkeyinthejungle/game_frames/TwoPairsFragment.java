@@ -10,7 +10,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.taras.monkeyinthejungle.GamePlan;
 import com.example.taras.monkeyinthejungle.R;
+import com.example.taras.monkeyinthejungle.game_logic_pkg.GameLogic;
 import com.example.taras.monkeyinthejungle.games.TwoPairs;
 
 import java.util.Arrays;
@@ -18,7 +20,10 @@ import java.util.Collections;
 
 public class TwoPairsFragment extends Fragment implements OnClickListener {
 
-    TwoPairs twopairs = new TwoPairs();
+    private TwoPairs twopairs;
+    private GameLogic gameTracker;
+    private final int PAIRS = 4;
+    private int counter;
 
     ImageView imgView_11,
             imgView_12,
@@ -38,7 +43,14 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
             img202,
             img203,
             img204;
+    public TwoPairsFragment() {
+    }
 
+
+    public static TwoPairsFragment newInstance() {
+        TwoPairsFragment fragment = new TwoPairsFragment();
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,8 +60,10 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-
+        gameTracker = GamePlan.getGameLogic();
+        twopairs = (TwoPairs)gameTracker.getGame().getGame();
         twopairs.shuffleArray();
+        counter = 0;
 
         imgView_11 = (ImageView) getView().findViewById(R.id.img_11);
         imgView_12 = (ImageView) getView().findViewById(R.id.img_12);
@@ -165,7 +179,10 @@ public class TwoPairsFragment extends Fragment implements OnClickListener {
     private void calculate() {
         // If images are eqaul remove them and point
         if(twopairs.getFirstCard() == twopairs.getSecondCard()) {
-
+            counter++;
+            if(counter == PAIRS ) {
+                gameTracker.success();
+            }
             switch (twopairs.getClickedFirst()){
                 case 0:
                     imgView_11.setVisibility(View.INVISIBLE);

@@ -45,7 +45,7 @@ public class MultiPlayerActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =
                 fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frg_multi_player_game_view, test3.newInstance(5));
+        fragmentTransaction.replace(R.id.frg_multi_player_game_view, test3.newInstance());
         fragmentTransaction.commit();
     }
 }

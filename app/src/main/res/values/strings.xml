@@ -13,6 +13,7 @@
     <string name="str_WordCollector">Word Collector</string>
     <string name="str_username">Username:</string>
     <string name="btn_save">Save</string>
+    <string name="str_your_score">You lucky monkey!! you have finished this game</string>
 
 
     <string name="title_activity_single_player">SinglePlayerActivity</string>
@@ -21,6 +22,9 @@
     <string name="str_collect_word_header">Collect A Word</string>
     <string name="str_reset">Reset</string>
     <string name="str_shake_game_header">Shake Your Phone </string>
+    <string name="str_single_player_skip">Skip</string>
+    <string name="str_new_game">New Game</string>
+    <string name="str_back">Back</string>
 
 
 

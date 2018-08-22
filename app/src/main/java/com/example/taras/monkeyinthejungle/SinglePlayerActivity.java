@@ -1,163 +1,156 @@
 package com.example.taras.monkeyinthejungle;
 
-import android.annotation.SuppressLint;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
-public class SinglePlayerActivity extends AppCompatActivity {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
-    private static final boolean AUTO_HIDE = true;
+import com.example.taras.monkeyinthejungle.game_frames.MissingNumberGameFragment;
+import com.example.taras.monkeyinthejungle.game_frames.ShakeGameFragment;
+import com.example.taras.monkeyinthejungle.game_frames.TapCounterFragment;
+import com.example.taras.monkeyinthejungle.game_frames.TwoPairsFragment;
+import com.example.taras.monkeyinthejungle.game_frames.WordCollectorGameFragment;
+import com.example.taras.monkeyinthejungle.game_logic_pkg.GameLogic;
+import com.example.taras.monkeyinthejungle.game_logic_pkg.GameNode;
 
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
+import java.util.Observable;
+import java.util.Observer;
 
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
-    private static final int UI_ANIMATION_DELAY = 300;
-    private final Handler mHideHandler = new Handler();
+public class SinglePlayerActivity extends AppCompatActivity implements Observer {
+
     private View mContentView;
-    private final Runnable mHidePart2Runnable = new Runnable() {
-        @SuppressLint("InlinedApi")
-        @Override
-        public void run() {
-            // Delayed removal of status and navigation bar
-
-            // Note that some of these constants are new as of API 16 (Jelly Bean)
-            // and API 19 (KitKat). It is safe to use them, as they are inlined
-            // at compile-time and do nothing on earlier devices.
-            mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        }
-    };
-    private View mControlsView;
-    private final Runnable mShowPart2Runnable = new Runnable() {
-        @Override
-        public void run() {
-            // Delayed display of UI elements
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.show();
-            }
-            mControlsView.setVisibility(View.VISIBLE);
-        }
-    };
-    private boolean mVisible;
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
-        }
-    };
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
-    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
-            }
-            return false;
-        }
-    };
-
+    private GameLogic logic;
+    private ProgressBar mProgressBar;
+    private CountDownTimer mCountDownTimer;
+    private int gameTime;
+    private Button btnSkip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_single_player);
-
-        mVisible = true;
-        mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
-
-
-        // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle();
-            }
-        });
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        mContentView = findViewById(R.id.cnl_single_player_layout);
+        setButtonEventListener();
+        setFullScreenView();
+        logic = GamePlan.getGameLogic();
+        logic.addObserver(this);
+        mProgressBar=(ProgressBar)findViewById(R.id.prg_single_aktv_progress_bar);
+        setFrame();
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
-        delayedHide(100);
-    }
-
-    private void toggle() {
-        if (mVisible) {
-            hide();
-        } else {
-            show();
-        }
-    }
-
-    private void hide() {
-        // Hide UI first
+    private void setFullScreenView() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
-        mControlsView.setVisibility(View.GONE);
-        mVisible = false;
-
-        // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
+        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
-    @SuppressLint("InlinedApi")
-    private void show() {
-        // Show the system bar
-        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        mVisible = true;
-
-        // Schedule a runnable to display UI elements after a delay
-        mHideHandler.removeCallbacks(mHidePart2Runnable);
-        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
+    private void setFrame() {
+        GameNode game = logic.getGame();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction =
+                fragmentManager.beginTransaction();
+        switch(game.getType()) {
+            case "two_pair":
+                fragmentTransaction.replace(R.id.frg_single_game_replace_fragment, (new TwoPairsFragment()).newInstance());
+                break;
+            case "tap_counter":
+                fragmentTransaction.replace(R.id.frg_single_game_replace_fragment, (new TapCounterFragment()).newInstance());
+                break;
+            case "shake_it":
+                fragmentTransaction.replace(R.id.frg_single_game_replace_fragment, (new ShakeGameFragment()).newInstance());
+                break;
+            case "find_the_number":
+                fragmentTransaction.replace(R.id.frg_single_game_replace_fragment, (new MissingNumberGameFragment()).newInstance());
+                break;
+            case "word_collector":
+                fragmentTransaction.replace(R.id.frg_single_game_replace_fragment, (new WordCollectorGameFragment()).newInstance());
+                break;
+            default:
+                Log.e("RTE", "Trying To Create Unknown Game");
+                break;
+        }
+        fragmentTransaction.commit();
+        setTimer(game);
+        logic.startRound();
     }
 
-    /**
-     * Schedules a call to hide() in delay milliseconds, canceling any
-     * previously scheduled calls.
-     */
-    private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    public void update(Observable obj, Object arg) {
+        if(mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+        }
+        switch((String)arg) {
+            case "game:nextRound":
+                setFrame();
+                break;
+            case "game:done":
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction =
+                        fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frg_single_game_replace_fragment, (new FinishGameFragment()).newInstance());
+                fragmentTransaction.commit();
+                mProgressBar.setVisibility(View.INVISIBLE);
+                btnSkip.setVisibility(View.INVISIBLE);
+                break;
+            case "game:newGame":
+                mProgressBar.setVisibility(View.VISIBLE);
+                btnSkip.setVisibility(View.VISIBLE);
+                setFrame();
+                break;
+            default: break;
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GamePlan.deleteGame();
+        logic.deleteObserver(this);
+    }
+
+    private void setButtonEventListener(){
+        btnSkip = findViewById(R.id.btn_single_player_skip);
+
+        btnSkip.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                logic.skip();
+            }
+        });
+    }
+
+    private void setTimer(GameNode game ) {
+        gameTime = game.getRoundTime() * 10;
+        mProgressBar.setMax(gameTime);
+        mProgressBar.setProgress(gameTime);
+        mCountDownTimer=new CountDownTimer(gameTime * 100,100) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                gameTime--;
+                mProgressBar.setProgress((int)gameTime);
+
+            }
+            @Override
+            public void onFinish() {
+                mProgressBar.setProgress(1);
+                logic.skip();
+            }
+        };
+        mCountDownTimer.start();
     }
 }

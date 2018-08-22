@@ -1,6 +1,7 @@
 package com.example.taras.monkeyinthejungle.games;
 
 import android.app.Activity;
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
 import android.hardware.Sensor;
@@ -12,34 +13,35 @@ import android.hardware.SensorManager;
 import java.util.Observable;
 
 
-public class ShakeGame extends Observable {
+public class ShakeGame  {
     private SensorManager sensorManager;
     private float shake;
-    private boolean callBackEnable;
-    private boolean alertCallBackEnable;
     private int alertDistance;
+    MutableLiveData<Integer> liveShakeUpdater;
 
 
 
-    public ShakeGame(Activity act) {
-        sensorManager = (SensorManager) act.getSystemService(Context.SENSOR_SERVICE);
-        sensorManager.registerListener(sensorListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
-        callBackEnable = false;
-        alertCallBackEnable = false;
+    public ShakeGame() {
+        liveShakeUpdater = new MutableLiveData<>();
     }
 
-    public float getShake() {
-        return shake;
+    public void startGame(Activity act) {
+        sensorManager = (SensorManager) act.getSystemService(Context.SENSOR_SERVICE);
+        sensorManager.registerListener(sensorListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+
     }
 
     public void setAlertDistance(int distance) {
         alertDistance = distance;
-        alertCallBackEnable = true;
 
     }
 
-    public void setCallBack(boolean b){
-        callBackEnable = b;
+    public int getDistance() {
+     return alertDistance;
+    }
+
+    public MutableLiveData<Integer> getLiveData() {
+        return liveShakeUpdater;
     }
 
     private final SensorEventListener sensorListener = new SensorEventListener() {
@@ -52,14 +54,7 @@ public class ShakeGame extends Observable {
             float distance = (float) Math.sqrt(x*x+y*y+z*z) * 0.004f;
             if(distance > 0.05) {
                 shake += distance;
-            }
-            if (callBackEnable ) {
-                setChanged();
-                notifyObservers("" + shake);
-            }
-            if(alertCallBackEnable && shake >= alertDistance) {
-                setChanged();
-                notifyObservers("done");
+                liveShakeUpdater.setValue((int)shake);
             }
         }
 
@@ -68,5 +63,4 @@ public class ShakeGame extends Observable {
 
         }
     };
-
 }

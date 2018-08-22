@@ -4,7 +4,7 @@ import android.util.Log;
 
 import java.util.Random;
 
-public class MissingNumberGame {
+public class MissingNumberGame  {
 
     private static final int MAXNUMBER = 100;
     private static final int MINNUMBER = 10;
@@ -29,11 +29,8 @@ public class MissingNumberGame {
 
     public String getEquation() { return equation ;}
 
-    public boolean isCorrect(int answer) {
-        return answer == this.answer;
-    }
-
     public int getAngwerId() { return answerIndex; }
+
     private int generateEquation() {
         int hiddenNumber = rand.nextInt(VARIABLES );
         Log.d("MN", hiddenNumber + "");
@@ -73,4 +70,5 @@ public class MissingNumberGame {
         answerIndex = rand.nextInt(OPTIONS);
         options[answerIndex] = correctAnswer;
     }
+
 }

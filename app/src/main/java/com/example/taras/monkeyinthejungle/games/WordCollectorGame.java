@@ -6,9 +6,9 @@ import java.util.Random;
 public class WordCollectorGame {
     private final String[] randomWords = {
             "There", "Are", "Multiple", "Depth", "Features", "Such", "product", "review",
-            "laptop", "digital", "audio", "player", "technology", "editorial", "digital",
-            "camera", "advertising", "regular", "feature", "include", "adrenaline", "junkie",
-            "article", "speculative", "page", "about", "upcoming", "technology"};
+            "laptop", "digital", "audio", "player", "technology", "editorial", "camera",
+            "advertising", "regular", "feature", "include", "adrenaline", "junkie", "article",
+            "speculative", "page", "about", "upcoming", "technology"};
     private char[] randomString;
     private String word;
 

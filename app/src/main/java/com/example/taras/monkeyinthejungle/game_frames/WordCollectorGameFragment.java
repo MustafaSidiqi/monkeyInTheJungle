@@ -3,20 +3,18 @@ package com.example.taras.monkeyinthejungle.game_frames;
 
         import android.app.Activity;
         import android.os.Bundle;
-        import android.support.annotation.NonNull;
         import android.support.v4.app.Fragment;
-        import android.util.Log;
         import android.view.LayoutInflater;
         import android.widget.LinearLayout;
         import android.widget.TableRow.LayoutParams;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.Button;
-        import android.widget.TableLayout;
-        import android.widget.TableRow;
         import android.widget.TextView;
 
+        import com.example.taras.monkeyinthejungle.GamePlan;
         import com.example.taras.monkeyinthejungle.R;
+        import com.example.taras.monkeyinthejungle.game_logic_pkg.GameLogic;
         import com.example.taras.monkeyinthejungle.games.WordCollectorGame;
 
 public class WordCollectorGameFragment extends Fragment {
@@ -26,15 +24,15 @@ public class WordCollectorGameFragment extends Fragment {
     private char shuffledWord[];
     private String answer;
     private Button allButtons[];
+    private WordCollectorGame game;
+    private GameLogic gameTracker;
 
     public WordCollectorGameFragment() {
     }
 
 
-    public static WordCollectorGameFragment newInstance(int gameId) {
+    public static WordCollectorGameFragment newInstance() {
         WordCollectorGameFragment fragment = new WordCollectorGameFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_PARAM1, gameId);
         return fragment;
     }
 
@@ -50,21 +48,25 @@ public class WordCollectorGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         System.out.println(gameId);
         activeView = inflater.inflate(R.layout.fragment_word_collector_game, container, false);
-        WordCollectorGame game = new WordCollectorGame();
-        setValues(game, activeView);
+        game = (WordCollectorGame) GamePlan.getGameLogic().getGame().getGame();
+        gameTracker = GamePlan.getGameLogic();
+        setValues(activeView);
         setResetButtonListener(activeView);
         return activeView;
     }
 
-    private void setValues(WordCollectorGame game,View v ) {
+    private void setValues(View v ) {
         shuffledWord = game.getShuffledWord();
         answer = game.getWord();
+        System.out.println(answer);
         Activity activity = getActivity();
         LinearLayout mainLayout = v.findViewById(R.id.lnl_collect_word_layout);
         LinearLayout line = setNewLine(activity);
         allButtons = new Button[shuffledWord.length];
+        int nextChange = getNextLineChange(shuffledWord.length);
         for(int i = 0; i< shuffledWord.length; i++) {
-            if( i % 4 == 0) {
+            if( nextChange == 0) {
+                nextChange = getNextLineChange(shuffledWord.length - i);
                 mainLayout.addView(line);
                 line = setNewLine(activity);
             }
@@ -81,12 +83,15 @@ public class WordCollectorGameFragment extends Fragment {
                     String collectedWord = result.getText() + txt;
                     result.setText(collectedWord);
                     activeView.findViewById(v.getId()).setVisibility(View.INVISIBLE);
-                    if(collectedWord.equals(answer)) {
-                        result.setText("correct");
+                    System.out.println(collectedWord);
+                    System.out.println(answer);
+                    if((collectedWord.toLowerCase()).equals(answer.toLowerCase())) {
+                        gameTracker.success();
                     }
                 }
             });
             line.addView(btn);
+            nextChange--;
         }
         mainLayout.addView(line);
     }
@@ -112,4 +117,20 @@ public class WordCollectorGameFragment extends Fragment {
         });
     }
 
+    private int getNextLineChange(int lettersLeft){
+        int returnVal = 0;
+        switch(lettersLeft % 5){
+            case 0:
+                returnVal = 5;
+                break;
+            case 1: case 2: case 3:
+                returnVal = 3;
+                break;
+            case 4:
+                returnVal = 3;
+                break;
+        }
+
+        return returnVal;
+    }
 }
