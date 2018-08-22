@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "246707937741",
+    "firebase_url": "https://monkeyinthejungle-78177.firebaseio.com",
+    "project_id": "monkeyinthejungle-78177",
+    "storage_bucket": "monkeyinthejungle-78177.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246707937741:android:5e20ca9c2e7b11c4",
+        "android_client_info": {
+          "package_name": "com.example.taras.monkeyinthejungle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "246707937741-onnvtf72aa17p0b2ukds8d5kqtpklcm9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQnoDX8QfKc2sc95W7G-xNVDB-b4Yn5d4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
