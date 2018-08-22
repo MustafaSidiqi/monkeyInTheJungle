@@ -1,6 +1,7 @@
 package com.example.taras.monkeyinthejungle;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Lobby {
@@ -8,9 +9,9 @@ public class Lobby {
     String lobbyOwner;
     Boolean start;
     Map<String, Object> score = new HashMap<>();
-    GameObject gameObject;
+    List<GameObject> gameObject;
 
-    public Lobby(String lobbyName, String lobbyOwner, Boolean start, Map<String, Object> score, GameObject gameObject) {
+    public Lobby(String lobbyName, String lobbyOwner, Boolean start, Map<String, Object> score, List<GameObject> gameObject) {
         this.lobbyName = lobbyName;
         this.lobbyOwner = lobbyOwner;
         this.start = start;

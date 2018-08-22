@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameObject {
-    int result;
+    String result;
     int roundTime;
     String type;
     ArrayList<Object> list;
 
-    public GameObject(int result, int roundTime, String type, ArrayList list) {
+    public GameObject(String result, int roundTime, String type, ArrayList list) {
         this.result = result;
         this.roundTime = roundTime;
         this.type = type;
@@ -20,11 +20,11 @@ public class GameObject {
 
     }
 
-    public int getResult() {
+    public String getResult() {
         return result;
     }
 
-    public void setResult(int result) {
+    public void setResult(String result) {
         this.result = result;
     }
 

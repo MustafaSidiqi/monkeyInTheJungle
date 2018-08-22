@@ -63,7 +63,7 @@ public class MultiPlayerActivity extends AppCompatActivity {
                 GamePlan.getGameLogic().IsMultiplayer = true;
                 HashMap<String, Object> scoreMap = new HashMap<>();
                 scoreMap.put("TEST", 0);
-                fb.addLobby(text, "TEST", false, scoreMap, GamePlan.getGameLogic().getLobyGames() );
+                fb.addLobby(text, "TEST", false, scoreMap, GamePlan.getGameLogic().getLobyGames());
             }
         });
         search.setOnClickListener(new View.OnClickListener(){

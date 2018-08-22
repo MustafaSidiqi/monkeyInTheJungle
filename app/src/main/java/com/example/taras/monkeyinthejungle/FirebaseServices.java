@@ -9,6 +9,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;
@@ -24,7 +25,7 @@ public class FirebaseServices {
     private int score;
     private String collectionPath = "Multi";
 
-    public void addLobby(String ln, String lo, Boolean gs, Map<String, Object> s, GameObject go) {
+    public void addLobby(String ln, String lo, Boolean gs, Map<String, Object> s, List<GameObject> go) {
         Lobby lobby = new Lobby(ln, lo, gs, s, go);
         // Add a new document with a generated ID
         db.collection(collectionPath).document().set(lobby)
@@ -42,6 +43,7 @@ public class FirebaseServices {
             addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if(documentSnapshot == null || documentSnapshot.getData() == null) { return; }
                     liveLobbyUpdater.postValue((ArrayList<Object>) documentSnapshot.getData().get("ReadyLobby"));
                 }
             });

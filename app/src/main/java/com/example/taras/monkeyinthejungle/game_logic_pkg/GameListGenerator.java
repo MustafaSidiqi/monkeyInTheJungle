@@ -27,12 +27,10 @@ public class GameListGenerator {
         setUpConditions();
         random = new Random();
         gameSetup = new Options();
-
     }
     
     public GameNode[] getGameList(){
         games = new GameNode[roundsCount];
-
         for( int i = 0; i < roundsCount; i++ ) {
             ArrayList<Object> list;
             switch(allowedGames.get(random.nextInt(allowedGames.size()))) {
@@ -81,9 +79,15 @@ public class GameListGenerator {
     
     
     private void setUpConditions() {
-        doRandom = gameSetup.isRandomGames();
-        roundsCount = gameSetup.getNumberOfRounds();
-        HashMap<String, Boolean> options_hashmap = gameSetup.getGamesToBePlayed();
+
+        doRandom = true; // gameSetup.isRandomGames();
+        roundsCount = 5;  // gameSetup.getNumberOfRounds();
+        HashMap<String, Boolean> options_hashmap = new HashMap();//gameSetup.getGamesToBePlayed();
+        options_hashmap.put("two_pair", true);
+        options_hashmap.put("tap_counter", true);
+        options_hashmap.put("shake_it", true);
+        options_hashmap.put("find_the_number", true);
+        options_hashmap.put("word_collector", true);
         allowedGames = new ArrayList<>();
         for (HashMap.Entry<String, Boolean> entry : options_hashmap.entrySet()) {
             if(doRandom || entry.getValue()) {

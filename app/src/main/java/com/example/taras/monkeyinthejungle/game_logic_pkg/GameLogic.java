@@ -3,6 +3,7 @@ import android.os.CountDownTimer;
 
 import com.example.taras.monkeyinthejungle.GameObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
@@ -64,12 +65,12 @@ public class GameLogic extends Observable {
         notifyObservers("game:newGame");
     }
 
-    public GameObject getLobyGames() {
-        GameObject[] g = new GameObject[games.length];
+    public List<GameObject> getLobyGames() {
+        List<GameObject> g = new ArrayList<>();
         for(int i = 0; i < games.length; i++) {
-            g[i] = new GameObject(/*games[i].getResult()*/0, games[i].getRoundTime(), games[i].getType(), games[i].getList());
+            g.add(new GameObject(games[i].getResult(), games[i].getRoundTime(), games[i].getType(), games[i].getList()));
         }
-        return g[0];
+        return g;
     }
 
     private void newGameList() {
@@ -84,9 +85,9 @@ public class GameLogic extends Observable {
         setChanged();
         if(stateIndex < games.length ) {
             notifyObservers("game:nextRound");
-            stateIndex--;
             return;
         }
+        stateIndex--;
         notifyObservers("game:done");
 
     }
