@@ -39,7 +39,7 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
             random_games_s;
 
     private EditText userTv;
-    Options options = new Options(this);
+    Options options = new Options();
 
 
     @Override

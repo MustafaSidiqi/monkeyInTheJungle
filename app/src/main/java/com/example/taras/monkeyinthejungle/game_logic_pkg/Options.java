@@ -31,7 +31,7 @@ public class Options {
     }
 
 
-    public Options(OptionsActivity optionsActivity) {
+    public Options() {
 
     }
 
