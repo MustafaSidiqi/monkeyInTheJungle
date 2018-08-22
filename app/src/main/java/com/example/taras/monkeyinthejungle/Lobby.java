@@ -1,15 +1,25 @@
 package com.example.taras.monkeyinthejungle;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Lobby {
     String lobbyName;
     String lobbyOwner;
     Boolean start;
+    Map<String, Object> score = new HashMap<>();
+    GameObject gameObject;
 
-
-    public Lobby(String name, String owner, Boolean start) {
-        this.lobbyName = name;
-        this.lobbyOwner = owner;
+    public Lobby(String lobbyName, String lobbyOwner, Boolean start, Map<String, Object> score, GameObject gameObject) {
+        this.lobbyName = lobbyName;
+        this.lobbyOwner = lobbyOwner;
         this.start = start;
+        this.score = score;
+        this.gameObject = gameObject;
+    }
+
+    public Lobby() {
+
     }
 
     public String getName() {
@@ -34,5 +44,17 @@ public class Lobby {
 
     public void setStart(Boolean start) {
         this.start = start;
+    }
+
+    public Map<String, Object> getScore() {
+        return score;
+    }
+
+    public void setScore(Map<String, Object> score) {
+        this.score = score;
+    }
+
+    public void addUserScore(String user, int points) {
+        this.score.put(user, points);
     }
 }

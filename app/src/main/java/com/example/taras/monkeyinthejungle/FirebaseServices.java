@@ -5,16 +5,11 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -25,13 +20,14 @@ public class FirebaseServices {
         liveLobbyUpdater = new MutableLiveData<>();
     }
 
-    public void helloFirebase() {// Create a new user with a first and last name
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private int score;
+    private String collectionPath = "Multi";
 
-        Lobby lobby = new Lobby("Mustafa", "Terminator", false);
-
+    public void addLobby(String ln, String lo, Boolean gs, Map<String, Object> s, GameObject go) {
+        Lobby lobby = new Lobby(ln, lo, gs, s, go);
         // Add a new document with a generated ID
-        db.collection("Lobbys").document().set(lobby)
+        db.collection(collectionPath).document().set(lobby)
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
@@ -52,4 +48,60 @@ public class FirebaseServices {
 
     }
 
+    public void addUserScore(final String name, final int score, String lobbyId) {
+        final DocumentReference document =  db.collection(collectionPath).document(lobbyId);
+        document.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    Lobby l = documentSnapshot.toObject(Lobby.class);
+                    l.addUserScore(name, score);
+                    document.set(l);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+    public void changeGameStart(final boolean val, String lobbyId) {
+        final DocumentReference document =  db.collection(collectionPath).document(lobbyId);
+        document.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    Lobby l = documentSnapshot.toObject(Lobby.class);
+                    l.setStart(val);
+                    document.set(l);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+    }
+
+    public Lobby getLobbyObject(String lobbyId) {
+        final DocumentReference document =  db.collection(collectionPath).document(lobbyId);
+        Lobby l = null;
+        document.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    Lobby l = documentSnapshot.toObject(Lobby.class);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+        return l;
+    }
 }
