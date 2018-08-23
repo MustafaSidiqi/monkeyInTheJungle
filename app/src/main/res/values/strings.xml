@@ -29,6 +29,13 @@
     <string name="str_new_game">New Game</string>
     <string name="str_back">Back</string>
 
+    <string-array name="gameNames">
+        <item>Two Pairs</item>
+        <item>Tap Counter</item>
+        <item>Collect a word</item>
+        <item>Shake it</item>
+        <item>Missing Number</item>
+    </string-array>
 
 
     <!-- test strings -->
