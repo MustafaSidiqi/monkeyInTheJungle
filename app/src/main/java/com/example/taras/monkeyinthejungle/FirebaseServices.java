@@ -42,7 +42,9 @@ public class FirebaseServices {
             addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    liveLobbyUpdater.postValue((ArrayList<Object>) documentSnapshot.getData().get("ReadyLobby"));
+                    ArrayList<Object> result = documentSnapshot == null || documentSnapshot.getData() == null ?
+                            new ArrayList<Object>() : (ArrayList<Object>) documentSnapshot.getData().get("ReadyLobby");
+                    liveLobbyUpdater.postValue(result);
                 }
             });
 
