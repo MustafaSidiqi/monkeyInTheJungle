@@ -44,10 +44,10 @@ public class GameLogic extends Observable {
         int points = 0;
         int time = 0;
         for (int i = 0; i < pointArray.length; i++){
-            points = pointArray[i][0];
-            time = pointArray[i][1];
+            points += pointArray[i][0];
+            time += pointArray[i][1];
         }
-        return points == 0 ? 0 : (int)(points * 1.5) - time;
+        return points <= 0 ? 0 : (int)(points * 1.5) - time;
     }
 
     public void newGame() {
